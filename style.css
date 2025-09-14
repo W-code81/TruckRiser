@@ -1,0 +1,456 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 2;
+  background-color: rgba(231, 231, 231, 0.185);
+}
+
+.h-p {
+  max-width: 600px;
+  width: 90vw;
+  margin: 1rem auto;
+  text-align: center;
+  /* font-size: clamp(1rem, 2.5vw, 1.25rem); */
+  line-height: 1.6;
+}
+/* 
+         h1{
+          font-size: clamp(1.8rem, 5vw, 2.5rem);
+         } */
+
+/*            
+           .h-p{
+            width: 50%;
+            margin: auto;
+            text-align: left;
+           } */
+
+nav ul {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+nav li {
+  height: 50px;
+}
+
+nav li a {
+  height: 100%;
+  padding: 0 30px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  color: black;
+}
+
+/* nav a:hover{
+            background-color: #f0f0f0;
+           } */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0; /*done so the sidebar wouldn't interfer with the rest of the code sort of offscreen */
+  height: 100vh;
+  width: 250px;
+  z-index: 999; /* so the sidebar would be about everything*/
+  background-color: rgba(255, 255, 255, 0.322);
+  backdrop-filter: blur(10px); /*glass effect*/
+  box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
+  display: none;
+  flex-direction: column;
+  align-items: flex-start; /* the flex-starts was to uncenter the links*/
+  justify-content: flex-start;
+}
+
+.sidebar li {
+  width: 100%; /*for sidebar links to cover the full width of the sidebar*/
+}
+
+.sidebar a {
+  width: 100%;
+}
+
+.menu-button {
+  display: none;
+}
+
+.topnav {
+  margin: 20px 4vw;
+  display: flex;
+  justify-content: space-between;
+  z-index: 999;
+  /* position: sticky;
+            top: 0; */
+}
+
+.topnav a {
+  display: inline-block;
+  color: black;
+  padding: 10px;
+  margin: 10px;
+  text-decoration: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.topnav a:hover {
+  background-color: #dddddd7a;
+  transition: background-color 0.3s ease;
+}
+
+/* for Home Nav */
+a.color1 {
+  background-color: #dddddd7a;
+  padding: 10px 20px;
+}
+
+/* Start for Contact Us */
+a.color2 {
+  background-color: white;
+}
+
+a.color2:hover {
+  background-color: rgb(232, 232, 232);
+  transition: background-color 0.3s ease;
+}
+
+/* End for Contact Us */
+
+/* Start for Login */
+
+a.color3 {
+  background-color: rgb(255, 119, 0);
+  color: white;
+  text-decoration: none;
+  border-radius: 13px;
+  padding: 10px 20px;
+}
+
+a.color3:hover {
+  background-color: rgb(235, 122, 23);
+  transition: background-color 0.3s ease;
+}
+
+/*End for Login  */
+
+/*Start for Book Truck  */
+a.color4 {
+  background-color: rgb(255, 119, 0);
+  color: white;
+  text-decoration: none;
+  border-radius: 13px;
+  padding: 15px 20px;
+}
+
+a.color4:hover {
+  background-color: rgb(235, 122, 23);
+  transition: background-color 0.3s ease;
+}
+
+/*End for Book Truck  */
+
+.logo {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  padding: 0 10px;
+}
+
+.logo-img {
+  height: 100%;
+  border-radius: 50%;
+  max-height: 50px; /* Controls logo size on desktop */
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* .topnav .icon{
+            display: none;
+          } */
+
+span.color {
+  color: rgba(255, 68, 0, 0.688);
+}
+
+.fakeimg {
+  display: block;
+  width: 100%;
+  margin: 30px 0 22px 0;
+  padding: 200px;
+  background-color: #aaa;
+}
+
+.column {
+  width: 25%;
+  padding: 20px;
+  text-align: left;
+}
+
+.row {
+  margin: 30px 0 30px 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.img-column {
+  flex: 1 1 33%;
+  padding: 10px;
+  text-align: center;
+}
+
+/* same as fakeimg but for the cars */
+.car-img {
+  margin: 10px 0 10px 0;
+  padding: 100px;
+  background-color: #aaa;
+}
+
+.red {
+  opacity: 0.5;
+}
+
+.footer {
+  padding: 20px;
+  text-align: center;
+  background-color: #000000;
+}
+
+.foot-h2 {
+  color: #f1f1f1;
+}
+
+/* .foot-p{
+          color: #f1f1f1;
+          width: 50%;
+          margin: 10px auto;
+          text-align: left;
+        } */
+
+.rights-p {
+  text-align: center;
+  color: hsla(0, 100%, 100%, 0.6);
+}
+
+input[type="text"] {
+  width: 24.6%;
+  padding: 12px 20px;
+  margin: 3px;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  border-radius: 10px;
+  transition: 0.3s;
+  outline: none;
+  background-color: #eae6e6;
+}
+
+input[type="text"]:focus {
+  border: 3px solid #555;
+}
+
+input[type="email"] {
+  width: 50%;
+  padding: 12px 20px;
+  margin: 3px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 3px solid #ccc;
+  transition: 0.3s;
+  outline: none;
+  background-color: #eae6e6;
+}
+
+input[type="email"]:focus {
+  border: 3px solid #555;
+}
+
+textarea {
+  width: 50%;
+  height: 150px;
+  padding: 12px 20px;
+  margin: 3px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  /* transition: 0.3; */
+  background-color: #eae6e6;
+  font-size: 16px;
+  resize: none;
+}
+
+input[type="submit"] {
+  width: 50%;
+  padding: 12px 20px;
+  margin: 10px;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  font-size: 20px;
+  border-radius: 10px;
+  background-color: #eae6e6;
+}
+
+hr {
+  width: 50%;
+  margin: auto;
+  /* color:hsla(0, 98%, 52%, 0.036); */
+}
+
+/* On screens that are 992px wide or less, go from four columns to two columns */
+@media screen and (max-width: 992px) {
+  .column {
+    width: 50%;
+  }
+  .img-column {
+    width: 33.3%;
+  }
+  .hideonMobile {
+    display: none;
+  }
+  .menu-button {
+    display: flex;
+  }
+  h1 {
+    line-height: 1.3;
+    font-size: clamp(
+      1.2rem,
+      calc(4vw + 0.4rem),
+      2.3rem
+    ); /* responsive font size */
+  }
+}
+
+ /* Tablet responsiveness (max-width: 900px)  */
+/*@media screen and (max-width: 900px) {
+    .topnav {
+    margin: 10px 2vw;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+   }   
+  .logo {
+    height: 50px;
+    padding: 0 5px;
+  }
+  .logo-img {
+    max-height: 40px;
+  }
+  .row {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .column,
+  .img-column {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+  }
+  .fakeimg,
+  .car-img {
+    padding: 80px;
+  }
+  .footer {
+    padding: 10px;
+  }
+  .h-p {
+    font-size: 1rem;
+    padding: 0 5px;
+  }
+ } */
+
+/* On screens that are 600px wide or less, make the columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column,
+  .img-column {
+    width: 100%;
+  }
+
+  h1 {
+    line-height: 1.3;
+    font-size: clamp(
+      1.2rem,
+      calc(4vw + 0.4rem),
+      2.3rem
+    ); /* responsive font size */
+  }
+  .h-p {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0 10px;
+    /* text-wrap: nowrap; */
+  }
+
+  input[type="text"],
+  [type="textarea"],
+  input[type="email"],
+  hr {
+    width: 100%;
+  }
+
+  .logo {
+    height: 40px;
+    padding: 0 5px;
+  }
+
+  .logo-img {
+    max-height: 32px;
+  }
+}
+
+/* Extra small screens (max-width: 400px) 
+@media screen and (max-width: 400px) {
+  /* .topnav {
+    margin: 5px 1vw;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  } 
+  .logo {
+    height: 32px;
+    padding: 0 2px;
+  }
+  .logo-img {
+    max-height: 24px;
+  }
+  .h-p {
+    font-size: 0.95rem;
+    padding: 0 2px;
+  }
+  .footer {
+    padding: 5px;
+  }
+  .fakeimg,
+  .car-img {
+    padding: 40px;
+  }
+  input[type="text"],
+  input[type="email"],
+  textarea,
+  input[type="submit"] {
+    font-size: 0.95rem;
+    padding: 8px 10px;
+  }
+  h1 {
+    font-size: 1.1rem;
+  }
+ }/*
