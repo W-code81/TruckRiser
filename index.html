@@ -283,20 +283,20 @@
         reset: true,
       });
 
-      // Hide sidebar when clicking outside of it
-      document.addEventListener("click", function (event) {
-        const sidebar = document.querySelector(".sidebar");
-        // Only run if sidebar is visible
-        if (sidebar && sidebar.style.display === "flex") {
-          // If the click is NOT inside the sidebar or the menu button
-          if (
-            !sidebar.contains(event.target) &&
-            !event.target.closest(".menu-button")
-          ) {
-            sidebar.style.display = "none";
-          }
-        }
-      });
+      // // Hide sidebar when clicking outside of it
+      // document.addEventListener("click", function (event) {
+      //   const sidebar = document.querySelector(".sidebar");
+      //   // Only run if sidebar is visible
+      //   if (sidebar && sidebar.style.display === "flex") {
+      //     // If the click is NOT inside the sidebar or the menu button
+      //     if (
+      //       !sidebar.contains(event.target) &&
+      //       !event.target.closest(".menu-button")
+      //     ) {
+      //       sidebar.style.display = "none";
+      //     }
+      //   }
+      // });
     </script>
 
     <div class="footer" id="contact">

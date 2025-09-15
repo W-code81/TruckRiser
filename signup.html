@@ -52,19 +52,21 @@
         background: #fff;
         outline: none;
       }
-      button[type="submit"] {
+
+      .login {
         background: #ff7700;
-        color: #fff;
-        border: none;
-        border-radius: 8px;
-        padding: 12px 0;
-        font-size: 1.1rem;
-        font-weight: bold;
-        cursor: pointer;
-        margin-top: 0.5rem;
-        transition: background 0.2s;
+        width: 20%;
+        text-align: center;
+        padding: 8px 12px;
+        border-radius: 10px;
+        display: block;
+        margin: auto;
+        text-decoration: none;
+        color: white;
+        font-weight: bolder;
       }
-      button[type="submit"]:hover {
+
+      .login:hover{
         background: #e65c00;
       }
 
@@ -103,7 +105,7 @@
         <input type="email" id="email" placeholder="Email" />
         <label for="password">Password</label>
         <input type="password" id="password" placeholder="Password" />
-        <button type="submit">Submit</button>
+        <a class="login" href="index.html">Submit</a>
 
         <a href="login.html" class="signup-link"> Login</a>
       </form>
