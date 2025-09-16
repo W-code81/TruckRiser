@@ -190,8 +190,6 @@ span.color {
 .fakeimg {
   display: block;
   width: 100%;
-  margin: 30px 0 22px 0;
-  padding: 200px;
   background-color: #aaa;
 }
 
