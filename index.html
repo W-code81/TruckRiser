@@ -18,8 +18,10 @@
 
     <!-- css styling -->
     <link rel="stylesheet" href="style.css" />
+
     <!-- fontawesome -->
     <link rel="stylesheet" href="Assets/css/all.min.css" />
+
     <!-- bootstrap link for css and js -->
     <link rel="stylesheet" href="dist/css/bootstrap.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -89,7 +91,7 @@
 
       <br />
 
-      <a href="#" class="color4" onclick="sweetNote()"
+      <a href="#" class="color4"
         >Book a Truck <i class="fas fa-arrow-right"></i
       ></a>
 
@@ -152,7 +154,7 @@
 
       <br />
 
-      <a href="#" class="color4" onclick="sweetNotee()">Book a Truck <i class="fas fa-arrow-right"></i></a>
+      <a href="#" class="color4">Book a Truck <i class="fas fa-arrow-right"></i></a>
 
       <div class="row">
         <div class="img-column">
@@ -171,140 +173,6 @@
         </div>
       </div>
     </section>
-
-    <script src="https://unpkg.com/scrollreveal"></script>
-
-    <script>
-      // Optional: Scroll to top button
-      const scrollBtn = document.createElement("button");
-      scrollBtn.innerHTML = "↑";
-      scrollBtn.style.position = "fixed";
-      scrollBtn.style.bottom = "20px";
-      scrollBtn.style.right = "40px";
-      scrollBtn.style.padding = "10px 15px";
-      scrollBtn.style.border = "none";
-      scrollBtn.style.borderRadius = "30px";
-      scrollBtn.style.backgroundColor = "#ff7700";
-      scrollBtn.style.color = "#fff";
-      scrollBtn.style.cursor = "pointer";
-      scrollBtn.style.display = "none";
-      scrollBtn.style.zIndex = "1000";
-      document.body.appendChild(scrollBtn);
-
-      window.addEventListener("scroll", () => {
-        scrollBtn.style.display = window.scrollY > 500 ? "block" : "none";
-      });
-
-      scrollBtn.addEventListener("click", () => {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-      });
-
-      // for the sidebar
-      function showSideBar() {
-        const sidebar = document.querySelector(".sidebar");
-        sidebar.style.display = "flex";
-      }
-
-      function closeSideBar() {
-        const sidebar = document.querySelector(".sidebar");
-        sidebar.style.display = "none";
-      }
-
-      // Animate the main headline and first button
-      ScrollReveal().reveal("h1", {
-        origin: "bottom",
-        distance: "40px",
-        duration: 900,
-        easing: "ease-in-out",
-        opacity: 0,
-        reset: true,
-      });
-
-      // Animate the main description paragraph
-      ScrollReveal().reveal(".h-p", {
-        origin: "bottom",
-        distance: "30px",
-        duration: 800,
-        delay: 200,
-        opacity: 0,
-        reset: true,
-      });
-
-      // Animate the "Book a Truck" buttons
-      ScrollReveal().reveal(".color4", {
-        origin: "bottom",
-        distance: "40px",
-        duration: 900,
-        delay: 300,
-        opacity: 0,
-        reset: true,
-      });
-
-      // Animate the fakeimg
-      ScrollReveal().reveal("fakeimg", {
-        origin: "right",
-        distance: "30px",
-        duration: 900,
-        opacity: 0,
-        reset: true,
-      });
-
-      // Animate the feature columns
-      ScrollReveal().reveal(".column", {
-        origin: "bottom",
-        distance: "60px",
-        duration: 1000,
-        interval: 250,
-        opacity: 0,
-        reset: true,
-      });
-
-      // Animate the truck image columns
-      ScrollReveal().reveal(".img-column", {
-        origin: "left",
-        distance: "60px",
-        duration: 900,
-        interval: 200,
-        opacity: 0,
-        reset: true,
-      });
-
-      // Animate the footer section
-      ScrollReveal().reveal(".footer", {
-        origin: "bottom",
-        distance: "60px",
-        duration: 1000,
-        delay: 400,
-        opacity: 0,
-        reset: true,
-      });
-
-      // function sweetNote() {
-      //   alert("I");
-      // }
-
-      // function sweetNotee() {
-      //   alert("I");
-      // }
-
-      // // Hide sidebar when clicking outside of it
-      // document.addEventListener("click", function (event) {
-      //   const sidebar = document.querySelector(".sidebar");
-      //   // Only run if sidebar is visible
-      //   if (sidebar && sidebar.style.display === "flex") {
-      //     // If the click is NOT inside the sidebar or the menu button
-      //     if (
-      //       !sidebar.contains(event.target) &&
-      //       !event.target.closest(".menu-button")
-      //     ) {
-      //       sidebar.style.display = "none";
-      //     }
-      //   }
-      // });
-    </script>
 
     <div class="footer" id="contact">
       <h2 class="foot-h2">Contact Us</h2>
@@ -343,5 +211,8 @@
         <p>ALL RIGHTS RESERVED &reg; 2025</p>
       </div>
     </div>
+
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="script.js"></script>
   </body>
 </html>
