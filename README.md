@@ -65,7 +65,7 @@ Notes:
 
 ## License & Author
 - Minimal MIT-style permission granted — feel free to reuse and adapt.
-- Author: Oluwa (see project workspace)
+- Author: W-code81 (see project workspace)
 
 
 ---
