@@ -69,5 +69,3 @@ Notes:
 
 
 ---
-
-Edited to focus the README on TruckRiser as a small web application (server + views + static assets).
