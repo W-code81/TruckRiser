@@ -29,7 +29,6 @@ TruckRiser/
 - `public/` — static assets (css, js, Image, jQuery)
 - `views/` — EJS templates (index.ejs, login.ejs, signup.ejs, pricing.ejs)
 - `README.md` — original file
-- `README_new.md` — this updated README copy
 
 
 ## Getting Started (local)
