@@ -63,8 +63,9 @@
         background: #ff7700;
         width: 20%;
         text-align: center;
-        padding: 8px 12px;
+        padding: 10px 12px;
         border-radius: 10px;
+        border: none;
         display: block;
         margin: auto;
         text-decoration: none;
@@ -112,17 +113,17 @@
   </head>
   <body>
     <div class="form-container">
-      <form action="" method="post" autocomplete="on">
+      <form action="/login" method="post" autocomplete="on">
         <h1>Welcome Back👋</h1>
         <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Email" />
+        <input type="email" id="email" placeholder="Email" name="email"/>
         <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Password" />
-        <a class="login" href="index.html">Login</a>
+        <input type="password" id="password" placeholder="Password" name="password"/>
+        <button class="login">Login</button>
 
         <div class="form-links">
-          <a href="index.html" class="login-link">Forgot Password?</a>
-          <a href="signup.html" class="login-link">Signup</a>
+          <a href="/forgot-password" class="login-link">Forgot Password?</a>
+          <a href="/signup" class="login-link">Signup</a>
         </div>
       </form>
     </div>
