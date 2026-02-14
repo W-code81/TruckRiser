@@ -57,8 +57,9 @@
         background: #ff7700;
         width: 20%;
         text-align: center;
-        padding: 8px 12px;
+        padding: 10px 12px;
         border-radius: 10px;
+        border: none;
         display: block;
         margin: auto;
         text-decoration: none;
@@ -95,19 +96,19 @@
   </head>
   <body>
     <div class="form-container">
-      <form action="" method="post" autocomplete="on" target="_blank">
+      <form action="/signup" method="post" autocomplete="on">
         <h1>Get Started🚘</h1>
-        <label for="sName">Surname:</label>
+        <!-- <label for="sName">Surname:</label>
         <input type="text" id="sName" placeholder="Surname" />
         <label for="Firstname">Firstname:</label>
-        <input type="text" id="Firstname" placeholder="Firstname" />
+        <input type="text" id="Firstname" placeholder="Firstname" /> -->
         <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Email" />
+        <input type="email" id="email" placeholder="Email" name="email"/>
         <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Password" />
-        <a class="login" href="index.html">Submit</a>
+        <input type="password" id="password" placeholder="Password" name="password"/>
+        <button class="login" type="submit">Submit</button>
 
-        <a href="login.html" class="signup-link"> Login</a>
+        <a href="/login" class="signup-link"> Login</a>
       </form>
     </div>
   </body>
