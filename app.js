@@ -7,7 +7,7 @@ const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose").default;
 const cookieParser = require("cookie-parser");
-const flash = require("connect-flash");
+const flash = require("connect-flash"); 
 const mongoose = require("mongoose");
 
 // MIDDLEWARES AND INITIALIZATIONS
