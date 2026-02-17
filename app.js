@@ -96,6 +96,7 @@ app.get("/home", (req, res) => {
     res.redirect("/login");
   } catch (err) {
     console.error("Error in /home route:", err);
+    res.redirect("/");
   }
 });
 
@@ -142,6 +143,8 @@ app
         req.flash("error", "User already registered");
         return res.redirect("/signup");
       }
+      res.status(500)
+      console.error("sign up error");
       req.flash("error", "sign up error");
       return res.redirect("/signup");
     }
