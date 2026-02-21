@@ -7,13 +7,42 @@ const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose").default;
 const cookieParser = require("cookie-parser");
-const flash = require("connect-flash"); 
+const flash = require("connect-flash");
+const rateLimit = require("express-rate-limit");
+const helmet = require("helmet");
 const mongoose = require("mongoose");
 
 // MIDDLEWARES AND INITIALIZATIONS
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+
+//HELMET MIDDLEWARE
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"], //only allow resources from the same origin
+        scriptSrc: ["'self'", "https://cdn.jsdelivr.net"], //allows scripts from the same origin and jsdelivr for flash messages, consider using nonces or hashes for better security
+        styleSrc: ["'self'", "https://cdn.jsdelivr.net", "'unsafe-inline'"], //allows inline styles for flash messages, consider using nonces or hashes for better security
+      },
+    },
+  }),
+);
+
+// RATE LIMITER MIDDLEWARE
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: "Too many requests from this IP, please try again after 15 minutes",
+});
+
+// COOKIEPARSER
+app.use(cookieParser());
+app.use((req, res, next) => {
+  res.locals.cookieConsent = req.cookies.cookieConsent; //global variable for accessing cookies
+  next();
+});
 
 // EXPRESS SESSIONS
 app.use(
@@ -35,15 +64,8 @@ app.use(passport.session()); //persists sessions
 // FLASH
 app.use(flash());
 app.use((req, res, next) => {
-  res.locals.success = req.flash("success"); // global success variable
-  res.locals.error = req.flash("error"); // global error variable
-  next();
-});
-
-// COOKIEPARSER
-app.use(cookieParser());
-app.use((req, res, next) => {
-  res.locals.cookieConsent = req.cookies.cookieConsent; //global variable for accessing cookies
+  res.locals.success = req.flash("success") || []; // global success variable - ensure it's always an array
+  res.locals.error = req.flash("error") || []; // global error variable - ensure it's always an array
   next();
 });
 
@@ -103,7 +125,7 @@ app.get("/home", (req, res) => {
 app
   .route("/login")
   .get((req, res) => {
-    res.render("login");
+    res.render("login", { currentPage: "login" });
   })
   .post(
     passport.authenticate("local", {
@@ -119,7 +141,7 @@ app
 app
   .route("/signup")
   .get((req, res) => {
-    res.render("signup");
+    res.render("signup", { currentPage: "signup" });
   })
 
   .post(async (req, res) => {
@@ -128,24 +150,32 @@ app
       console.log(email, password);
 
       if (!email || !password) {
-        req.flash("error", "please specify credentials");
+        req.flash("error", "Please specify credentials");
         return res.redirect("/signup");
       }
 
       await User.register({ email: email }, password);
 
       passport.authenticate("local")(req, res, () => {
-        req.flash("success", "successfully signed in");
+        req.flash("success", "Successfully signed up");
         res.redirect("/home");
       });
     } catch (err) {
-      if (err.code === 11000) {
+      console.error("sign up error:", err);
+      
+      // Handle duplicate key error or user already exists
+      if (err.code === 11000 || err.message.includes("already exists") || err.message.includes("already registered")) {
         req.flash("error", "User already registered");
-        return res.redirect("/signup");
+      } 
+      // Handle validation errors
+      else if (err.message && err.message.includes("Email")) {
+        req.flash("error", err.message);
       }
-      res.status(500)
-      console.error("sign up error");
-      req.flash("error", "sign up error");
+      // Generic error
+      else {
+        req.flash("error", "Sign up failed. Please try again.");
+      }
+      
       return res.redirect("/signup");
     }
   });
@@ -162,12 +192,19 @@ app.get("/logout", (req, res) => {
   });
 });
 
+app.get("/forgot-password", (req, res) => {});
+
 app.post("/accept-cookies", (req, res) => {
   res.cookie("cookieConsent", "true", {
-      httpOnly: false, //allows client side js to access the cookie since we need to check cookie consent in the frontend
-      maxAge: 1000 * 60 * 60 * 24, //expires after a day
-    });
-  res.status(200);
+    httpOnly: false, //allows client side js to access the cookie since we need to check cookie consent in the frontend
+    maxAge: 1000 * 60 * 60 * 24, //expires after a day
+  });
+
+  res.sendStatus(200);
+});
+
+app.get("/pricing", (req, res) => {
+  res.render("pricing", { currentPage: "pricing" });
 });
 
 app.listen(port, () => {
