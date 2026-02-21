@@ -7,7 +7,7 @@
 
 <script>
 function acceptCookies(){
-  fetch("/accept-cookies", { method: "POST" })
+  fetch("/accept-cookies", { method: "POST" , credentials: "same-origin"})
     .then(()=> {
       document.getElementById("cookie-banner").style.display="none";
     });
@@ -16,7 +16,7 @@ function acceptCookies(){
 <% } %>
 
   <script src="https://unpkg.com/scrollreveal"></script>
-  <script src="script.js"></script>
+  <script src="js/script.js"></script>
 
   
 </body>
