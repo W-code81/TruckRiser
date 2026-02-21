@@ -1,28 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Signup</title>
-    <link rel="stylesheet" href="/css/signup.css">
+<%- include("./partials/header.ejs") %>
 
-  </head>
-  <body>
+<div class="page-signup">
     <div class="form-container">
       <form action="/signup" method="post" autocomplete="on">
         <h1>Get Started🚘</h1>
-        <!-- <label for="sName">Surname:</label>
-        <input type="text" id="sName" placeholder="Surname" />
-        <label for="Firstname">Firstname:</label>
-        <input type="text" id="Firstname" placeholder="Firstname" /> -->
-        <label for="email">Email</label>
+        <label for="email">Email:</label>
         <input type="email" id="email" placeholder="Email" name="email"/>
-        <label for="password">Password</label>
+        <label for="password">Password:</label>
         <input type="password" id="password" placeholder="Password" name="password"/>
         <button class="login" type="submit">Submit</button>
 
         <a href="/login" class="signup-link"> Login</a>
       </form>
     </div>
-  </body>
-</html>
+</div>
+<%- include("./partials/footer.ejs") %>
