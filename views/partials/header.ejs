@@ -35,31 +35,18 @@
 <body>
 
   <% if (error && error.length > 0) { %>
-<div class="alert alert-danger alert-dismissible fade show" role="alert" id="errorAlert">
+<div class="alert alert-danger alert-dismissible fade show error" role="alert" id="errorAlert">
   <%= error[0] %>
   <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
 </div>
 <% } %>
 
 <% if (success && success.length > 0) { %>
-<div class="alert alert-success alert-dismissible fade show" role="alert" id="successAlert">
+<div class="alert alert-success alert-dismissible fade show success" role="alert" id="successAlert">
   <%= success[0] %>
   <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
 </div>
 <% } %>
-
-<style>
-  .alert {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 9999;
-    max-width: 90%;
-    width: 100%;
-    max-width: 500px;
-  }
-</style>
 
 <script>
   // Auto-dismiss alerts after 5 seconds
@@ -78,6 +65,7 @@
     if (successAlert) {
       setTimeout(() => {
         successAlert.style.opacity = '0';
+        successAlert.classList.add("success")
         successAlert.style.transition = 'opacity 0.5s ease';
         setTimeout(() => successAlert.remove(), 500);
       }, 5000);
