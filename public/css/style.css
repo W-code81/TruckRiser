@@ -484,12 +484,25 @@ hr {
 .error {
   background: #ffd6d6;
   color: #900;
+  border-radius: 14px;
 }
 
 .success {
   background: #d6ffd9;
   color: #060;
+  border-radius: 14px;
 }
+
+.alert {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    max-width: 90%;
+    width: 100%;
+    max-width: 500px;
+  }
 
 .alert {
   animation: slideOut 4s ease-in-out forwards;
