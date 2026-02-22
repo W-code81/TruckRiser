@@ -1,3 +1,26 @@
+  // Auto-dismiss alerts after 5 seconds
+  document.addEventListener('DOMContentLoaded', function() {
+    const errorAlert = document.getElementById('errorAlert');
+    const successAlert = document.getElementById('successAlert');
+    
+    if (errorAlert) {
+      setTimeout(() => {
+        errorAlert.style.opacity = '0';
+        errorAlert.style.transition = 'opacity 0.5s ease';
+        setTimeout(() => errorAlert.remove(), 500);
+      }, 5000);
+    }
+    
+    if (successAlert) {
+      setTimeout(() => {
+        successAlert.style.opacity = '0';
+        successAlert.classList.add("success")
+        successAlert.style.transition = 'opacity 0.5s ease';
+        setTimeout(() => successAlert.remove(), 500);
+      }, 5000);
+    }
+  });
+  
 // Optional: Scroll to top button
 const scrollBtn = document.createElement("button");
 scrollBtn.innerHTML = "↑";
