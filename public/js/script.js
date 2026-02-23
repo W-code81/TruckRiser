@@ -21,6 +21,61 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+// Cookie banner handlers: animate hide, call server, fallback, Manage button
+(function () {
+  function setupCookieHandlers() {
+    const cookieBanner = document.getElementById("cookie-banner");
+    const acceptCookiesBtn = document.getElementById("accept-cookies-btn");
+    const manageCookiesBtn = document.getElementById("manage-cookies-btn");
+
+    if (acceptCookiesBtn) {
+      acceptCookiesBtn.addEventListener("click", function () {
+        if (cookieBanner) {
+          cookieBanner.classList.add("cookie-hide");
+          setTimeout(() => {
+            cookieBanner.style.display = "none";
+          }, 260);
+        }
+
+        fetch("/accept-cookies", {
+          method: "POST",
+          credentials: "same-origin",
+        }).catch((err) => {
+          console.error("accept-cookies error:", err);
+          // Fallback: set cookie client-side if server call fails
+          try {
+            document.cookie = "cookieConsent=true; max-age=86400; path=/";
+          } catch (e) {
+            console.error("Failed to set cookie fallback:", e);
+          }
+        });
+      });
+    }
+
+    // Trigger slide-in animation after a short delay so transition applies
+    if (cookieBanner && !cookieBanner.classList.contains('cookie-show')) {
+      // Allow the browser to paint initial state
+      requestAnimationFrame(() => {
+        setTimeout(() => cookieBanner.classList.add('cookie-show'), 20);
+      });
+    }
+
+    if (manageCookiesBtn) {
+      manageCookiesBtn.addEventListener("click", function () {
+        // Send user to privacy or preferences. Fallback to /privacy
+        window.location.href = "/privacy";
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupCookieHandlers);
+  } else {
+    setupCookieHandlers();
+  }
+})();
+
+
 // Optional: Scroll to top button
 const scrollBtn = document.createElement("button");
 scrollBtn.innerHTML = "↑";

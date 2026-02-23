@@ -69,6 +69,16 @@ app.use((req, res, next) => {
   next();
 });
 
+// Show cookie banner only on the index (/home) after authentication
+app.use((req, res, next) => {
+  try {
+    res.locals.showCookieBanner = req.path === "/home" && req.isAuthenticated && req.isAuthenticated();
+  } catch (e) {
+    res.locals.showCookieBanner = false;
+  }
+  next();
+});
+
 // MONGODB INITIALIZATION AND SCHEMA
 mongoose
   .connect(process.env.MONGO_LOCAL_URI)

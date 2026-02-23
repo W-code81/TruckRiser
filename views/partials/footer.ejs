@@ -1,20 +1,19 @@
-<% if (!cookieConsent) { %>
-<div id="cookie-banner">
-  This site uses cookies to improve your experience.
-  <button onclick="acceptCookies()">Accept</button>
-</div>
+<% if (!cookieConsent && showCookieBanner) { %>
+<div id="cookie-banner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie banner">
+  <div class="cookie-inner">
+    <div class="cookie-text">
+      <div>
+        <strong>We use cookies</strong>
+        <div class="cookie-desc">to enhance your experience and analyze traffic. By clicking <strong>Accept</strong>, you agree to our <a href="/privacy">Privacy Policy</a>.</div>
+      </div>
+    </div>
 
-<script>
-  function acceptCookies() {
-    fetch("/accept-cookies", {
-        method: "POST",
-        credentials: "same-origin"
-      })
-      .then(() => {
-        document.getElementById("cookie-banner").style.display = "none";
-      });
-  }
-</script>
+    <div class="cookie-actions">
+      <button id="accept-cookies-btn" class="cookie-btn cookie-btn-primary">Accept</button>
+      <button id="manage-cookies-btn" class="cookie-btn cookie-btn-secondary">Manage</button>
+    </div>
+  </div>
+</div>
 <% } %>
 <script src="https://unpkg.com/scrollreveal"></script>
 <script src="js/script.js"></script>
