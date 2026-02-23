@@ -461,32 +461,45 @@ hr {
   }
  } */
 
-/* Modern SaaS-style cookie banner */
+/* Modern SaaS-style cookie banner (compact, lower-left) */
 #cookie-banner,
 .cookie-banner {
   position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 24px;
+  transform: none;
   bottom: 24px;
-  width: calc(100% - 48px);
-  max-width: 980px;
+  width: auto;
+  max-width: 380px;
+  min-width: 260px;
   background: linear-gradient(180deg, #ffffff, #fbfbff);
   color: #0f172a;
-  padding: 14px 16px;
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.12);
+  padding: 12px 14px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
   display: flex;
   align-items: center;
   z-index: 9999;
   transition: transform 240ms ease, opacity 240ms ease;
 }
 
+/* Slide-in initial state from the left */
+.cookie-banner {
+  opacity: 0;
+  transform: translateX(-12px) translateY(0);
+}
+
+/* Visible state triggers a light slide and fade */
+.cookie-banner.cookie-show {
+  opacity: 1;
+  transform: translateX(0) translateY(0);
+}
+
 .cookie-inner {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
   width: 100%;
-  gap: 12px;
+  gap: 8px;
 }
 
 .cookie-text {
@@ -508,6 +521,8 @@ hr {
 .cookie-actions {
   display: flex;
   gap: 8px;
+  margin-top: 6px;
+  align-self: flex-end;
 }
 
 .cookie-btn {
@@ -531,7 +546,26 @@ hr {
   color: #0b1220;
 }
 
+@media (max-width: 900px) {
+  /* Slightly reduce size on tablets */
+  #cookie-banner,
+  .cookie-banner {
+    max-width: 320px;
+    left: 18px;
+    bottom: 18px;
+  }
+}
+
 @media (max-width: 600px) {
+  /* On small screens, center at bottom and expand for readability */
+  #cookie-banner,
+  .cookie-banner {
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 32px);
+    max-width: none;
+    border-radius: 10px;
+  }
   .cookie-inner {
     flex-direction: column;
     align-items: flex-start;
@@ -545,7 +579,7 @@ hr {
 /* Hide animation */
 .cookie-hide {
   opacity: 0;
-  transform: translateY(20px) translateX(-50%);
+  transform: translateY(12px);
   pointer-events: none;
 }
 
