@@ -1,5 +1,5 @@
-<% if (!cookieConsent) { %>
-<div id="cookie-banner" class="cookie-banner cookie-show" role="dialog" aria-live="polite" aria-label="Cookie banner">
+<% if (!cookieConsent && showCookieBanner) { %>
+<div id="cookie-banner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie banner">
   <div class="cookie-inner">
     <div class="cookie-text">
       <div>
