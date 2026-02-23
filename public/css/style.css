@@ -535,9 +535,14 @@ hr {
 }
 
 .cookie-btn-primary {
-  background: #2563eb;
+  background: rgb(255, 119, 0);
   color: #fff;
   box-shadow: 0 6px 18px rgba(37, 99, 235, 0.14);
+}
+
+.cookie-btn-primary:hover {
+  background: rgb(235, 122, 23);
+  transition: background-color 0.3s ease;
 }
 
 .cookie-btn-secondary {
