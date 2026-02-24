@@ -202,15 +202,55 @@ span.color {
 }
 
 .column {
-  width: 25%;
+  width: calc(25% - 18px);
   padding: 20px;
   text-align: left;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  margin: 0 9px;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+.column:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.column i {
+  color: #ff7700;
+}
+
+.column h2 {
+  
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.column h2 i {
+  font-size: 1.5rem;
+}
+
+.column p {
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  flex-grow: 1;
 }
 
 .row {
-  margin: 30px 0 30px 0;
+  margin: 30px auto;
   display: flex;
   flex-wrap: wrap;
+  max-width: 1400px;
+  justify-content: center;
+  gap: 0;
 }
 
 .row:after {
@@ -325,7 +365,8 @@ hr {
 /* On screens that are 992px wide or less, go from four columns to two columns */
 @media screen and (max-width: 992px) {
   .column {
-    width: 50%;
+    width: calc(50% - 18px);
+    margin: 0 9px;
   }
   .img-column {
     width: 33.3%;
@@ -388,7 +429,17 @@ hr {
 @media screen and (max-width: 600px) {
   .column,
   .img-column {
-    width: 100%;
+    width: calc(100% - 18px);
+    margin: 0 9px;
+    min-height: auto;
+  }
+
+  .column h2 {
+    font-size: 1.1rem;
+  }
+
+  .column p {
+    font-size: 0.9rem;
   }
 
   h1 {
