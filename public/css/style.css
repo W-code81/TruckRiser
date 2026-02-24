@@ -202,6 +202,7 @@ span.color {
 }
 
 .column {
+  flex: 1 1 calc(25% - 18px);
   width: calc(25% - 18px);
   padding: 20px;
   text-align: left;
@@ -213,6 +214,7 @@ span.color {
   min-height: 320px;
   display: flex;
   flex-direction: column;
+  min-width: 240px;
 }
 
 .column:hover {
@@ -251,6 +253,12 @@ span.color {
   max-width: 1400px;
   justify-content: center;
   gap: 0;
+  padding: 0 20px;
+}
+
+.row:has(.img-column) {
+  gap: 24px;
+  padding: 0 20px;
 }
 
 .row:after {
@@ -260,16 +268,62 @@ span.color {
 }
 
 .img-column {
-  flex: 1 1 33%;
-  padding: 10px;
+  flex: 1 1 calc(33.333% - 16px);
+  min-width: 280px;
+  max-width: 380px;
+  padding: 0;
   text-align: center;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* same as fakeimg but for the cars */
+.img-column:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* Truck images styling */
+.truck-img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 0;
+  margin: 0;
+  box-shadow: none;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+}
+
+.truck-img:hover {
+  transform: scale(1.12);
+}
+
+.img-column h3 {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  margin: 18px 18px 10px 18px;
+  color: #222;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.img-column p {
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  color: #555;
+  margin: 0 18px 18px 18px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* Legacy - keep for backward compatibility */
 .car-img {
   margin: 10px 0 10px 0;
   padding: 100px;
   background-color: #aaa;
+  display: none;
 }
 
 .red {
@@ -369,7 +423,9 @@ hr {
     margin: 10px 9px;
   }
   .img-column {
-    width: 33.3%;
+    flex: 1 1 calc(50% - 12px);
+    min-width: 280px;
+    max-width: none;
   }
   .hideonMobile {
     display: none;
@@ -427,12 +483,28 @@ hr {
 
 /* On screens that are 600px wide or less, make the columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
+  .row {
+    gap: 16px;
+    padding: 0 12px;
+  }
+
   .column,
   .img-column {
     width: calc(100% - 20px);
     margin: 12px 10px;
     min-height: auto;
     padding: 16px;
+    flex: 1 1 100%;
+    max-width: none;
+    min-width: auto;
+  }
+
+  .img-column {
+    padding: 0;
+  }
+
+  .truck-img {
+    height: 240px;
   }
 
   .column h2 {
@@ -440,6 +512,14 @@ hr {
   }
 
   .column p {
+    font-size: 0.9rem;
+  }
+
+  .img-column h3 {
+    font-size: 1rem;
+  }
+
+  .img-column p {
     font-size: 0.9rem;
   }
 
