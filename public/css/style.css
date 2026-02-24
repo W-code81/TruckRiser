@@ -366,7 +366,7 @@ hr {
 @media screen and (max-width: 992px) {
   .column {
     width: calc(50% - 18px);
-    margin: 0 9px;
+    margin: 10px 9px;
   }
   .img-column {
     width: 33.3%;
@@ -429,9 +429,10 @@ hr {
 @media screen and (max-width: 600px) {
   .column,
   .img-column {
-    width: calc(100% - 18px);
-    margin: 0 9px;
+    width: calc(100% - 20px);
+    margin: 12px 10px;
     min-height: auto;
+    padding: 16px;
   }
 
   .column h2 {
