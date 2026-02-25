@@ -3,6 +3,7 @@
   margin: 0;
   box-sizing: border-box;
   z-index: 1;
+  /* outline: 1px solid red; */
 }
 
 html {
@@ -19,7 +20,7 @@ body {
 .h-p {
   max-width: 600px;
   width: 90vw;
-  margin: 1rem auto;
+  margin: 1rem auto 0.5rem auto;
   text-align: center;
   /* font-size: clamp(1rem, 2.5vw, 1.25rem); */
   line-height: 1.6;
@@ -152,8 +153,13 @@ a.color4 {
   background-color: rgb(255, 119, 0);
   color: white;
   text-decoration: none;
-  border-radius: 13px;
-  padding: 15px 20px;
+  border-radius: 8px;
+  padding: 15px 20px; /* smaller button padding */
+  margin: 14px 0 28px 0;
+  display: inline-block; /* allow vertical margins without stretching */
+  font-size: 0.92rem;
+  line-height: 1;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
 a.color4:hover {
@@ -190,27 +196,76 @@ span.color {
 .fakeimg {
   display: block;
   width: 100%;
-  height: 30vh;
+  height: 48vh;
   background-color: #aaa;
+  object-fit: cover;
+  margin: 15px 0; /* spacing between button and hero image */
 }
 
 @media screen and (max-width: 992px) {
   .fakeimg {
-    margin-top: 5vh;
+    margin-top: 32px; /* slightly larger gap on tablets */
   }
-  
 }
 
 .column {
-  width: 25%;
+  flex: 1 1 calc(25% - 18px);
+  width: calc(25% - 18px);
   padding: 20px;
   text-align: left;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  margin: 0 9px;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  min-width: 240px;
+}
+
+.column:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.column i {
+  color: #ff7700;
+}
+
+.column h2 {
+  
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.column h2 i {
+  font-size: 1.5rem;
+}
+
+.column p {
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  flex-grow: 1;
 }
 
 .row {
-  margin: 30px 0 30px 0;
+  margin: 30px auto;
   display: flex;
   flex-wrap: wrap;
+  max-width: 1400px;
+  justify-content: center;
+  gap: 0;
+  padding: 0 20px;
+}
+
+.row:has(.img-column) {
+  gap: 24px;
+  padding: 0 20px;
 }
 
 .row:after {
@@ -220,16 +275,62 @@ span.color {
 }
 
 .img-column {
-  flex: 1 1 33%;
-  padding: 10px;
+  flex: 1 1 calc(33.333% - 16px);
+  min-width: 280px;
+  max-width: 380px;
+  padding: 0;
   text-align: center;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* same as fakeimg but for the cars */
+.img-column:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* Truck images styling */
+.truck-img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 0;
+  margin: 0;
+  box-shadow: none;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+}
+
+.truck-img:hover {
+  transform: scale(1.12);
+}
+
+.img-column h3 {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  margin: 18px 18px 10px 18px;
+  color: #222;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.img-column p {
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  color: #555;
+  margin: 0 18px 18px 18px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* Legacy - keep for backward compatibility */
 .car-img {
   margin: 10px 0 10px 0;
   padding: 100px;
   background-color: #aaa;
+  display: none;
 }
 
 .red {
@@ -256,6 +357,10 @@ span.color {
 .rights-p {
   text-align: center;
   color: hsla(0, 100%, 100%, 0.6);
+}
+
+form{
+  margin: 20px auto;
 }
 
 input[type="text"] {
@@ -318,17 +423,20 @@ input[type="submit"] {
 
 hr {
   width: 50%;
-  margin: auto;
+  margin: 20px auto;
   /* color:hsla(0, 98%, 52%, 0.036); */
 }
 
 /* On screens that are 992px wide or less, go from four columns to two columns */
 @media screen and (max-width: 992px) {
   .column {
-    width: 50%;
+    width: calc(50% - 18px);
+    margin: 10px 9px;
   }
   .img-column {
-    width: 33.3%;
+    flex: 1 1 calc(50% - 12px);
+    min-width: 280px;
+    max-width: none;
   }
   .hideonMobile {
     display: none;
@@ -386,9 +494,44 @@ hr {
 
 /* On screens that are 600px wide or less, make the columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
+  .row {
+    gap: 16px;
+    padding: 0 12px;
+  }
+
   .column,
   .img-column {
-    width: 100%;
+    width: calc(100% - 20px);
+    margin: 12px 10px;
+    min-height: auto;
+    padding: 16px;
+    flex: 1 1 100%;
+    max-width: none;
+    min-width: auto;
+  }
+
+  .img-column {
+    padding: 0;
+  }
+
+  .truck-img {
+    height: 240px;
+  }
+
+  .column h2 {
+    font-size: 1.1rem;
+  }
+
+  .column p {
+    font-size: 0.9rem;
+  }
+
+  .img-column h3 {
+    font-size: 1rem;
+  }
+
+  .img-column p {
+    font-size: 0.9rem;
   }
 
   h1 {
@@ -420,6 +563,10 @@ hr {
 
   .logo-img {
     max-height: 32px;
+  }
+
+  a.color4 {
+    margin-bottom: 30px;
   }
 }
 
