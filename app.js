@@ -38,6 +38,9 @@ const limiter = rateLimit({
   message: "Too many requests from this IP, please try again after 15 minutes",
 });
 
+app.use("/login", limiter);
+app.use("/signup", limiter);
+
 // COOKIEPARSER
 app.use(cookieParser());
 app.use((req, res, next) => {
