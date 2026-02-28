@@ -206,7 +206,9 @@ app.get("/logout", (req, res) => {
   });
 });
 
-app.get("/forgot-password", (req, res) => {});
+app.get("/forgot-password", (req, res) => {
+  res.send("Forgot password page - under construction");
+});
 
 app.post("/accept-cookies", (req, res) => {
   res.cookie("cookieConsent", "true", {
