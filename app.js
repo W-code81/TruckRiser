@@ -32,9 +32,11 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"], //only allow resources from the same origin
-        scriptSrc: ["'self'", "https://cdn.jsdelivr.net"], //allows scripts from the same origin and jsdelivr for flash messages, consider using nonces or hashes for better security
-        styleSrc: ["'self'", "https://cdn.jsdelivr.net", "'unsafe-inline'"], //allows inline styles for flash messages, consider using nonces or hashes for better security
+        scriptSrc: ["'self'", "https://cdn.jsdelivr.net", "https://unpkg.com"], //allows scripts from the same origin and jsdelivr for flash messages, consider using nonces or hashes for better security
+        styleSrc: ["'self'", "https://cdn.jsdelivr.net", "'unsafe-inline'", "https://cdnjs.cloudflare.com"], //allows inline styles for flash messages, consider using nonces or hashes for better security
         imgSrc: ["'self'", "https://images.unsplash.com"], //allows images from the same origin and Unsplash
+        connectSrc: ["'self'", "https://cdn.jsdelivr.net"], //allows AJAX requests to the same origin and jsdelivr for flash messages, consider using nonces or hashes for better security
+        fontSrc:["'self'", "https://cdnjs.cloudflare.com"], //allows fonts from the same origin and cdnjs
       },
     },
   }),
