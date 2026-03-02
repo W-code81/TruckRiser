@@ -234,8 +234,13 @@ app.post("/accept-cookies", (req, res) => {
 });
 
 app.get("/pricing", (req, res) => {
-  res.render("pricing", { currentPage: "pricing" });
+  res.status(200).send("coming soon")
+  // res.render("pricing", { currentPage: "pricing" });
 });
+
+app.get("/rent" , (req, res) =>{
+  res.status(200).send("coming soon")
+})
 
 app.listen(port, () => {
   console.log(`truck app is live at port ${port}`);
