@@ -33,10 +33,15 @@ app.use(
       directives: {
         defaultSrc: ["'self'"], //only allow resources from the same origin
         scriptSrc: ["'self'", "https://cdn.jsdelivr.net", "https://unpkg.com"], //allows scripts from the same origin and jsdelivr for flash messages, consider using nonces or hashes for better security
-        styleSrc: ["'self'", "https://cdn.jsdelivr.net", "'unsafe-inline'", "https://cdnjs.cloudflare.com"], //allows inline styles for flash messages, consider using nonces or hashes for better security
+        styleSrc: [
+          "'self'",
+          "https://cdn.jsdelivr.net",
+          "'unsafe-inline'",
+          "https://cdnjs.cloudflare.com",
+        ], //allows inline styles for flash messages, consider using nonces or hashes for better security
         imgSrc: ["'self'", "https://images.unsplash.com"], //allows images from the same origin and Unsplash
         connectSrc: ["'self'", "https://cdn.jsdelivr.net"], //allows AJAX requests to the same origin and jsdelivr for flash messages, consider using nonces or hashes for better security
-        fontSrc:["'self'", "https://cdnjs.cloudflare.com"], //allows fonts from the same origin and cdnjs
+        fontSrc: ["'self'", "https://cdnjs.cloudflare.com"], //allows fonts from the same origin and cdnjs
       },
     },
   }),
@@ -45,8 +50,8 @@ app.use(
 // RATE LIMITER MIDDLEWARE
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-  skip : () => process.env.NODE_ENV === "development",
+  max: 10, // limit each IP to 100 requests per windowMs
+  skip: () => process.env.NODE_ENV === "development",
   message: "Too many requests from this IP, please try again after 15 minutes",
 });
 
@@ -89,7 +94,7 @@ app.use((req, res, next) => {
 // Show cookie banner only on the index (/home) after authentication
 app.use((req, res, next) => {
   try {
-    res.locals.showCookieBanner = req.path === "/home" && req.isAuthenticated()
+    res.locals.showCookieBanner = req.path === "/home" && req.isAuthenticated();
   } catch (e) {
     res.locals.showCookieBanner = false;
   }
@@ -98,8 +103,8 @@ app.use((req, res, next) => {
 
 // MONGODB INITIALIZATION AND SCHEMA
 mongoose
-  .connect(process.env.MONGO_LOCAL_URI)
-  .then(() => console.log("Connected to MongoDB"))
+  .connect(process.env.MONGO_ATLAS_URI)
+  .then(() => console.log("Connected to MongoDB Atlas"))
   .catch((err) => console.error("Error connecting to MongoDB:", err));
 
 const userSchema = new mongoose.Schema(
@@ -135,11 +140,9 @@ app.get("/", (req, res) => {
   res.redirect("/signup");
 });
 
-app.get("/home", ensureAuthenticated , (req, res) => {
+app.get("/home", ensureAuthenticated, (req, res) => {
   try {
-
     res.render("index");
-
   } catch (err) {
     console.error("Error in /home route:", err);
     res.redirect("/");
@@ -161,7 +164,7 @@ app
       res.redirect("/home");
     },
   );
-
+// what if the a user tries to login with an email that is not registered? the failureFlash should handle that and show an error message, but we can also add a check before authentication to provide a more specific error message if the email is not found in the database. This would involve querying the User model to see if the email exists before calling passport.authenticate. If the email doesn't exist, we can flash a specific error message like "Email not registered" and redirect back to the login page without attempting authentication. This would enhance the user experience by providing clearer feedback on why the login failed.
 app
   .route("/signup")
   .get((req, res) => {
@@ -226,7 +229,7 @@ app.get("/forgot-password", (req, res) => {
 app.post("/accept-cookies", (req, res) => {
   res.cookie("cookieConsent", "true", {
     httpOnly: false, //allows client side js to access the cookie since we need to check cookie consent in the frontend
-    secure: process.env.NODE_ENV === "production" ,
+    secure: process.env.NODE_ENV === "production",
     maxAge: 1000 * 60 * 60 * 24, //expires after a day
   });
 
@@ -234,13 +237,13 @@ app.post("/accept-cookies", (req, res) => {
 });
 
 app.get("/pricing", (req, res) => {
-  res.status(200).send("coming soon")
+  res.status(200).send("coming soon");
   // res.render("pricing", { currentPage: "pricing" });
 });
 
-app.get("/rent" , (req, res) =>{
-  res.status(200).send("coming soon")
-})
+app.get("/rent", (req, res) => {
+  res.status(200).send("coming soon");
+});
 
 app.listen(port, () => {
   console.log(`truck app is live at port ${port}`);
