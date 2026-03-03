@@ -1,7 +1,7 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
-require("dotenv").config();
 const validator = require("validator");
 const session = require("express-session");
 const passport = require("passport");
@@ -17,15 +17,26 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+// Global custom authentication middleware
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  req.flash("error", "Please login to view page");
+  res.redirect("/login");
+}
+
 //HELMET MIDDLEWARE
 app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"], //only allow resources from the same origin
-        scriptSrc: ["'self'", "https://cdn.jsdelivr.net"], //allows scripts from the same origin and jsdelivr for flash messages, consider using nonces or hashes for better security
-        styleSrc: ["'self'", "https://cdn.jsdelivr.net", "'unsafe-inline'"], //allows inline styles for flash messages, consider using nonces or hashes for better security
+        scriptSrc: ["'self'", "https://cdn.jsdelivr.net", "https://unpkg.com"], //allows scripts from the same origin and jsdelivr for flash messages, consider using nonces or hashes for better security
+        styleSrc: ["'self'", "https://cdn.jsdelivr.net", "'unsafe-inline'", "https://cdnjs.cloudflare.com"], //allows inline styles for flash messages, consider using nonces or hashes for better security
         imgSrc: ["'self'", "https://images.unsplash.com"], //allows images from the same origin and Unsplash
+        connectSrc: ["'self'", "https://cdn.jsdelivr.net"], //allows AJAX requests to the same origin and jsdelivr for flash messages, consider using nonces or hashes for better security
+        fontSrc:["'self'", "https://cdnjs.cloudflare.com"], //allows fonts from the same origin and cdnjs
       },
     },
   }),
@@ -35,8 +46,12 @@ app.use(
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // limit each IP to 100 requests per windowMs
+  skip : () => process.env.NODE_ENV === "development",
   message: "Too many requests from this IP, please try again after 15 minutes",
 });
+
+// app.use("/login", limiter);
+// app.use("/signup", limiter);
 
 // COOKIEPARSER
 app.use(cookieParser());
@@ -53,6 +68,7 @@ app.use(
     saveUninitialized: false, // doesn't create if empty
     cookie: {
       httpOnly: true, //prevents client side js from accessing the cookie
+      secure: process.env.NODE_ENV === "production",
       maxAge: 1000 * 60 * 60 * 24, //cookie expires after 1 day
     },
   }),
@@ -73,7 +89,7 @@ app.use((req, res, next) => {
 // Show cookie banner only on the index (/home) after authentication
 app.use((req, res, next) => {
   try {
-    res.locals.showCookieBanner = req.path === "/home" && req.isAuthenticated && req.isAuthenticated();
+    res.locals.showCookieBanner = req.path === "/home" && req.isAuthenticated()
   } catch (e) {
     res.locals.showCookieBanner = false;
   }
@@ -119,14 +135,11 @@ app.get("/", (req, res) => {
   res.redirect("/signup");
 });
 
-app.get("/home", (req, res) => {
+app.get("/home", ensureAuthenticated , (req, res) => {
   try {
-    if (req.isAuthenticated()) {
-      return res.render("index");
-    }
 
-    req.flash("error", "Please login to view page");
-    res.redirect("/login");
+    res.render("index");
+
   } catch (err) {
     console.error("Error in /home route:", err);
     res.redirect("/");
@@ -158,7 +171,6 @@ app
   .post(async (req, res) => {
     try {
       const { email, password } = req.body;
-      console.log(email, password);
 
       if (!email || !password) {
         req.flash("error", "Please specify credentials");
@@ -173,11 +185,15 @@ app
       });
     } catch (err) {
       console.error("sign up error:", err);
-      
+
       // Handle duplicate key error or user already exists
-      if (err.code === 11000 || err.message.includes("already exists") || err.message.includes("already registered")) {
+      if (
+        err.code === 11000 ||
+        err.message.includes("already exists") ||
+        err.message.includes("already registered")
+      ) {
         req.flash("error", "User already registered");
-      } 
+      }
       // Handle validation errors
       else if (err.message && err.message.includes("Email")) {
         req.flash("error", err.message);
@@ -186,7 +202,7 @@ app
       else {
         req.flash("error", "Sign up failed. Please try again.");
       }
-      
+
       return res.redirect("/signup");
     }
   });
@@ -203,11 +219,14 @@ app.get("/logout", (req, res) => {
   });
 });
 
-app.get("/forgot-password", (req, res) => {});
+app.get("/forgot-password", (req, res) => {
+  res.send("Forgot password page - under construction");
+});
 
 app.post("/accept-cookies", (req, res) => {
   res.cookie("cookieConsent", "true", {
     httpOnly: false, //allows client side js to access the cookie since we need to check cookie consent in the frontend
+    secure: process.env.NODE_ENV === "production" ,
     maxAge: 1000 * 60 * 60 * 24, //expires after a day
   });
 
@@ -215,8 +234,13 @@ app.post("/accept-cookies", (req, res) => {
 });
 
 app.get("/pricing", (req, res) => {
-  res.render("pricing", { currentPage: "pricing" });
+  res.status(200).send("coming soon")
+  // res.render("pricing", { currentPage: "pricing" });
 });
+
+app.get("/rent" , (req, res) =>{
+  res.status(200).send("coming soon")
+})
 
 app.listen(port, () => {
   console.log(`truck app is live at port ${port}`);
