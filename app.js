@@ -50,7 +50,7 @@ app.use(
 // RATE LIMITER MIDDLEWARE
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  max: 10, // limit each IP to 100 requests per windowMs
   skip: () => process.env.NODE_ENV === "development",
   message: "Too many requests from this IP, please try again after 15 minutes",
 });
