@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+app.set("trust proxy", 1); // trust first proxy for secure cookies behind proxies/load balancers
 const port = process.env.PORT || 3000;
 const validator = require("validator");
 const session = require("express-session");
