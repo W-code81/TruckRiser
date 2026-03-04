@@ -1,7 +1,7 @@
 /* Login Page Styles - Scoped to avoid conflicts */
-html {
-  scrollbar-gutter: stable; /* reserves scrollbar space even when inactive */
-}
+/* html {
+  scrollbar-gutter: stable;  reserves scrollbar space even when inactive 
+} */
 
 .page-login {
   background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
@@ -133,5 +133,6 @@ html {
 @media (max-width: 500px) {
   .page-login .form-container {
     padding: 1.2rem 0.5rem;
+     margin: 0 1rem;
   }
 }
