@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Trigger slide-in animation after a short delay so transition applies
     if (cookieBanner && !cookieBanner.classList.contains('cookie-show')) {
       // Allow the browser to paint initial state
-      requestAnimationFrame(() => {
+      requestAnimationFrame(() => { 
         setTimeout(() => cookieBanner.classList.add('cookie-show'), 20);
       });
     }
@@ -197,3 +197,18 @@ ScrollReveal().reveal(".footer", {
 //     }
 //   }
 // });
+
+let icon = document.getElementById("show-password");
+if (icon){
+  icon.addEventListener("click", function () {
+    let passwordInput = document.getElementById("password");
+    if (passwordInput.type === "password") { //change to text to show password
+      passwordInput.type = "text";
+      icon.innerHTML = '<i class="fas fa-eye-slash"></i>'; //change icon to indicate password is visible
+    } else {
+      passwordInput.type = "password";
+      icon.innerHTML = '<i class="fas fa-eye"></i>';
+    }
+  });
+}
+  
