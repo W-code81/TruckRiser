@@ -1,24 +1,17 @@
 // Auto-dismiss alerts after 5 seconds
 document.addEventListener("DOMContentLoaded", function () {
-  const errorAlert = document.getElementById("errorAlert");
-  const successAlert = document.getElementById("successAlert");
+  const alerts = ["errorAlert", "successAlert"];
 
-  if (errorAlert) {
-    setTimeout(() => {
-      errorAlert.style.opacity = "0";
-      errorAlert.style.transition = "opacity 0.5s ease";
-      setTimeout(() => errorAlert.remove(), 500);
-    }, 5000);
-  }
-
-  if (successAlert) {
-    setTimeout(() => {
-      successAlert.style.opacity = "0";
-      successAlert.classList.add("success");
-      successAlert.style.transition = "opacity 0.5s ease";
-      setTimeout(() => successAlert.remove(), 500);
-    }, 5000);
-  }
+  alerts.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      setTimeout(() => {
+        el.style.transition = "opacity 0.5s ease";
+        el.style.opacity = "0";
+        setTimeout(() => el.remove(), 300);
+      }, 3000);
+    }
+  });
 });
 
 // Cookie banner handlers: animate hide, call server, fallback, Manage button
