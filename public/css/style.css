@@ -763,6 +763,31 @@ hr {
   color: #0b1220;
 }
 
+/* Hide animation */
+.cookie-hide {
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+} 
+
+.cookie-btn-close {
+  position: absolute;
+  top: 13px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: #6b7280;
+  font-size: 1.2rem;
+  padding: 4px 8px;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.cookie-btn-close:hover {
+  color: #0b1220;
+}
+
 @media (max-width: 900px) {
   /* Slightly reduce size on tablets */
   #cookie-banner,
@@ -793,12 +818,6 @@ hr {
   }
 }
 
-/* Hide animation */
-.cookie-hide {
-  opacity: 0;
-  transform: translateY(12px);
-  pointer-events: none;
-}
 
 /* Mobile — bottom center */
 .flash {
