@@ -68,6 +68,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 })();
 
+document.getElementById("close-cookies-btn")?.addEventListener("click", () => {
+  const banner = document.getElementById("cookie-banner");
+  banner.classList.add("cookie-hide");
+  setTimeout(() => banner.remove(), 300);
+});
+
 
 // Optional: Scroll to top button
 const scrollBtn = document.createElement("button");
