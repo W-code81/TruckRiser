@@ -68,6 +68,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 })();
 
+document.getElementById("close-cookies-btn")?.addEventListener("click", () => {
+  const banner = document.getElementById("cookie-banner");
+  banner.classList.add("cookie-hide");
+  setTimeout(() => banner.remove(), 300);
+});
+
 
 // Optional: Scroll to top button
 const scrollBtn = document.createElement("button");
@@ -147,7 +153,7 @@ ScrollReveal().reveal("fakeimg", {
 });
 
 // Animate the feature columns
-ScrollReveal().reveal(".column", {
+ScrollReveal().reveal(".col-reveal", {
   origin: "bottom",
   distance: "60px",
   duration: 1000,
@@ -157,7 +163,7 @@ ScrollReveal().reveal(".column", {
 });
 
 // Animate the truck image columns
-ScrollReveal().reveal(".img-column", {
+ScrollReveal().reveal(".card-reveal", {
   origin: "left",
   distance: "60px",
   duration: 900,
