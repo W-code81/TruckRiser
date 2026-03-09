@@ -211,3 +211,36 @@ if (icon){
   });
 }
   
+// 8 character password validation on the client side before form submission
+const form = document.getElementById("signupForm");
+
+form.addEventListener("submit", function (event) {
+  const passwordInput = form.querySelector("input[type='password']").value.trim(); // ← read here, not outside
+
+  if (passwordInput.length < 8) {
+    event.preventDefault();
+    showValidationError("Password must be at least 8 characters long.");
+    return;
+  }
+});
+
+function showValidationError(message) {
+  // remove existing validation error 
+  const existing = document.getElementById("validationError");
+  if (existing) existing.remove();
+
+  const flash = document.createElement("div");
+  flash.id = "validationError";
+  flash.className = "flash flash-error";
+  flash.innerHTML = `
+    <span class="flash-text">${message}</span>
+    <button class="flash-close" onclick="this.parentElement.remove()">✕</button>
+  `;
+  document.body.appendChild(flash);
+
+  setTimeout(() => {
+    flash.style.transition = "opacity 0.5s ease";
+    flash.style.opacity = "0";
+    setTimeout(() => flash.remove(), 500);
+  }, 4000);
+}
