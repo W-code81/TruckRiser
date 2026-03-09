@@ -173,14 +173,14 @@ ScrollReveal().reveal(".card-reveal", {
 });
 
 // Animate the footer section
-ScrollReveal().reveal(".footer", {
-  origin: "bottom",
-  distance: "60px",
-  duration: 1000,
-  delay: 400,
-  opacity: 0,
-  reset: true,
-});
+// ScrollReveal().reveal(".footer", {
+//   origin: "bottom",
+//   distance: "60px",
+//   duration: 1000,
+//   delay: 400,
+//   opacity: 0,
+//   reset: true,
+// });
 
 // // Hide sidebar when clicking outside of it
 // document.addEventListener("click", function (event) {
