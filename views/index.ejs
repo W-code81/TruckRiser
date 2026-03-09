@@ -20,15 +20,15 @@
     </div>
 
     <div class="hideonMobile">
-      <a href="#" class="color1"><i class="fas fa-house red"></i> Home </a>
-      <a href="/rent"><i class="fas fa-key red"></i> Rent a Truck </a>
-      <a href="/pricing"><i class="fas fa-tags red"></i> Pricing </a>
-      <a href="#about"><i class="fas fa-circle-info red"></i> About Us</a>
+      <a href="#" class="color1"><i class="fas fa-house dim"></i> Home </a>
+      <a href="/rent"><i class="fas fa-key dim"></i> Rent a Truck </a>
+      <a href="/pricing"><i class="fas fa-tags dim"></i> Pricing </a>
+      <a href="#about"><i class="fas fa-circle-info dim"></i> About Us</a>
     </div>
 
     <div class="hideonMobile">
       <a href="#contact" class="color2"
-        ><i class="fas fa-phone red"></i> Contact</a
+        ><i class="fas fa-phone dim"></i> Contact</a
       >
 
       <a href="/logout" class="color3"
@@ -182,37 +182,61 @@
   </div>
 </section>
 
-<div class="footer" id="contact">
-  <h2 class="foot-h2">Contact Us</h2>
+  <footer class="footer" id="contact">
+  <div class="footer-grid">
 
-  <form>
-    <input type="text" id="fname" name="fname" placeholder="First Name" />
-    <input type="text" id="lname" name="lname" placeholder="Last Name" />
+    <!-- LEFT -->
+    <div class="footer-brand">
+      <h2>Truck<span>Riser</span></h2>
+      <p>Reliable truck rentals for personal moves, business deliveries, and specialized logistics. Available 24/7, anywhere you need us.</p>
 
-    <input type="email" id="email" name="email" placeholder="Email" />
+      <div class="footer-links">
+        <a href="/home">Home</a>
+        <a href="/rent">Rent a Truck</a>
+        <a href="#about">About Us</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="#contact">Contact</a>
+        <a href="/forgot-password">Support</a>
+      </div>
 
-    <textarea
-      type="textarea"
-      name="textarea"
-      id="textarea"
-      placeholder="Write your message..."
-    ></textarea>
+      <div class="footer-socials">
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
 
-    <input
-      type="submit"
-      id="submit"
-      name="submit"
-      value="Send Message"
-      href="mailto:oluwadmilolaaderogba@gmail.com"
-    />
-  </form>
+    <!-- RIGHT -->
+    <div class="footer-form">
+      <h3>Send us a message</h3>
+      <p>We'll get back to you within 24 hours.</p>
 
-  <hr />
+      <form>
+        <div class="form-row">
+          <input type="text" placeholder="First Name" />
+          <input type="text" placeholder="Last Name" />
+        </div>
+        <input type="email" placeholder="Email" style="margin-bottom:12px;" />
+        <textarea placeholder="Write your message..."></textarea>
+        <button type="submit" class="footer-submit">
+          Send Message <i class="fas fa-paper-plane"></i>
+        </button>
+      </form>
+    </div>
 
-  <div class="rights-p">
-    <p>ALL RIGHTS RESERVED &reg; 2025</p>
   </div>
-</div>
+
+  <div class="footer-bottom">
+    <p>© 2025 TruckRiser. All rights reserved.</p>
+    <div class="footer-bottom-links">
+      <a href="/privacy">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
 <%- include("./partials/footer.ejs") %>
 
 <!-- MAILCHIMP API -->
