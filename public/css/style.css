@@ -744,9 +744,9 @@ i:hover {
     font-size: 0.9rem;
   }
 
-  .card-body:last-child{
+  /* .card-body:last-child{
     width: 350px;
-  }
+  } */
 
 
   h1 {
