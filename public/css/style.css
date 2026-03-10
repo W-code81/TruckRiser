@@ -744,9 +744,11 @@ i:hover {
     font-size: 0.9rem;
   }
 
-  /* .card-body:last-child{
-    width: 350px;
-  } */
+  .card-reveal {
+    width: 100%;
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
 
 
   h1 {
