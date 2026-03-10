@@ -744,6 +744,11 @@ i:hover {
     font-size: 0.9rem;
   }
 
+  .card-body:last-child{
+    width: 350px;
+  }
+
+
   h1 {
     line-height: 1.3;
     font-size: clamp(
