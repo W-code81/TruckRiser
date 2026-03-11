@@ -11,6 +11,7 @@ const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
+const nodemailer = require("nodemailer");
 const mongoose = require("mongoose");
 
 // MIDDLEWARES AND INITIALIZATIONS
@@ -104,7 +105,7 @@ app.use((req, res, next) => {
 
 // MONGODB INITIALIZATION AND SCHEMA
 mongoose
-  .connect(process.env.MONGO_ATLAS_URI)
+  .connect(process.env.MONGO_LOCAL_URI)
   .then(() => console.log("Connected to MongoDB Atlas"))
   .catch((err) => console.error("Error connecting to MongoDB:", err));
 
@@ -226,6 +227,16 @@ app.get("/logout", (req, res) => {
 app.get("/forgot-password", (req, res) => {
   res.send("Forgot password page - under construction");
 });
+
+// nodemailer contact route
+app.post("/contact", (req, res) =>{
+
+  const fName =  req.body.firstName;
+  const lName = req.body.lastName;
+  const Msg = req.body.Message
+  
+  // nodemailer email handler here 
+})
 
 app.post("/accept-cookies", (req, res) => {
   res.cookie("cookieConsent", "true", {
