@@ -88,6 +88,14 @@ nav li a {
   display: none;
 }
 
+.menu-button a{
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .topnav {
   margin: 20px 4vw;
   display: flex;
@@ -743,13 +751,6 @@ i:hover {
   .img-column p {
     font-size: 0.9rem;
   }
-
-  .card-reveal {
-    width: 100%;
-    max-width: 100%;
-    flex: 1 1 100%;
-  }
-
 
   h1 {
     line-height: 1.3;
