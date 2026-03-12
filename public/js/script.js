@@ -244,3 +244,22 @@ function showValidationError(message) {
     setTimeout(() => flash.remove(), 500);
   }, 4000);
 }
+
+// HOMEFORM FORM HANDLER 
+document.getElementById("homeForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(e.target); // Use FormData to easily serialize form inputs
+
+  const res = await fetch("/home", {
+    method: "POST",
+    body: new URLSearchParams(formData), // Convert FormData to URL-encoded string
+    credentials: "same-origin",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  });
+
+  if (res.ok) {
+    // manually show your flash message without page reload
+    document.querySelector(".alert.success").textContent = "Message sent successfully";
+  }
+});
