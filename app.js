@@ -12,11 +12,14 @@ const flash = require("connect-flash");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const nodemailer = require("nodemailer");
+const transporter = require("./lib/mailer");
+const _ = require("lodash");
 const mongoose = require("mongoose");
 
 // MIDDLEWARES AND INITIALIZATIONS
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
 app.use(express.static("public"));
 
 // Global custom authentication middleware
@@ -229,14 +232,39 @@ app.get("/forgot-password", (req, res) => {
 });
 
 // nodemailer contact route
-app.post("/contact", (req, res) =>{
+app.post("/contact", async (req, res) =>{
 
-  const fName =  req.body.firstName;
-  const lName = req.body.lastName;
-  const Msg = req.body.Message
-  
-  // nodemailer email handler here 
-})
+    const {firstName, lastName ,email, message } = req.body;
+    const trimmedEmail = _.trim(email);
+    const trimmedMessage = _.trim(message);
+
+    if (!firstName || !lastName || !email || !message) {
+      return res.status(400).json({ error: "All fields are required" }); // replace with flash after testing
+    }
+
+    if (!validator.isEmail(trimmedEmail)) {
+      return res.status(400).json({ error: "Invalid email address" }); // replace with flash after testing
+    }
+    
+    try {
+       await transporter.sendMail({
+        from: `"Contact Form" <${process.env.EMAIL_USER}>`,
+        to: process.env.EMAIL_USER, //sends to myself
+        replyTo: trimmedEmail, //reply's to sender 
+        subject: `New message from ${firstName} ${lastName}`,
+        text: trimmedMessage,
+        html:`
+        <p><strong>Name: </strong>${firstName} ${lastName}</p>
+        <p><strong>Email: </strong>${trimmedEmail}</p>
+        <p><strong>Message: </strong>${trimmedMessage}</p>
+        `,
+    });
+    res.status(200).json({success:true}); // replace with flash after testing
+    } catch (err) {
+      console.error("Error sending contact email:", err);
+      res.status(500).json({error:"Failed to submit email"}) // replace with flash after testing
+    }
+});
 
 app.post("/accept-cookies", (req, res) => {
   res.cookie("cookieConsent", "true", {
