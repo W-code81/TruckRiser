@@ -15,7 +15,6 @@ const nodemailer = require("nodemailer");
 const transporter = require("./lib/mailer");
 const _ = require("lodash");
 const mongoose = require("mongoose");
-const { render } = require("ejs");
 
 // MIDDLEWARES AND INITIALIZATIONS
 app.set("view engine", "ejs");
