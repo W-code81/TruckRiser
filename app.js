@@ -80,6 +80,7 @@ app.use(
       httpOnly: true, //prevents client side js from accessing the cookie
       secure: process.env.NODE_ENV === "production",
       maxAge: 1000 * 60 * 60 * 24, //cookie expires after 1 day
+      sameSite: "Strict", //prevents CSRF by only sending cookies for same site requests
     },
   }),
 );
