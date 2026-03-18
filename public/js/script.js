@@ -113,6 +113,20 @@ function closeSideBar() {
   sidebar.style.display = "none";
 }
 
+let openMenu = document.getElementById("openMenu");
+let closeMenu =  document.getElementById("closeMenu");
+
+openMenu.addEventListener("click", function () {
+showSideBar();
+return;
+});
+
+closeMenu.addEventListener("click", function () {
+  closeSideBar()
+  return;
+});
+
+
 // Animate the main headline and first button
 ScrollReveal().reveal("h1", {
   origin: "bottom",
@@ -263,3 +277,32 @@ document.getElementById("homeForm").addEventListener("submit", async (e) => {
     document.querySelector(".alert.success").textContent = "Message sent successfully";
   }
 });
+
+// document.querySelector("#homeForm").addEventListener("submit", async (e) => {
+//   e.preventDefault();
+
+//   const formData = new FormData(e.target);
+//   const alertBox = document.querySelector("#successAlert");
+
+//   try {
+//     const res = await fetch("/home", {
+//       method: "POST",
+//       body: new URLSearchParams(formData),
+//       headers: { "Content-Type": "application/x-www-form-urlencoded" },
+//     });
+
+//     const data = await res.json();
+
+//     if (data.success) {
+//       alertBox.textContent = data.success;
+//       alertBox.className = "alert success";
+//       e.target.reset(); // clears the form
+//     } else {
+//       alertBox.textContent = data.error;
+//       alertBox.className = "alert error";
+//     }
+//   } catch (err) {
+//     alertBox.textContent = "Something went wrong. Please try again.";
+//     alertBox.className = "alert error";
+//   }
+// });
