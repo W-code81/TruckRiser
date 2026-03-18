@@ -2,14 +2,14 @@
 
   <section>
     <nav>
-      <ul class="sidebar">
-        <li onclick="closeSideBar()">
+      <ul class="sidebar" id="closeMenu">
+        <li>
           <a href="#"><i class="fas fa-times" height="26px" width="26px"></i></a>
         </li>
         <li><a href="/rent">Rent a Truck</a></li>
         <li><a href="/pricing">Pricing</a></li>
-        <li><a href="#about" onclick="closeSideBar()">About</a></li>
-        <li><a href="#contact" onclick="closeSideBar()">Contact</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
         <li><a href="/logout">Logout</a></li>
       </ul>
     </nav>
@@ -33,7 +33,7 @@
       </div>
 
       <div class="menu-button">
-        <a href="#" onclick="showSideBar()"><i class="fas fa-bars" height="26px" width="26px"></i></a>
+        <a id="openMenu"><i class="fas fa-bars" height="26px" width="26px"></i></a>
       </div>
 
       <!-- MY approach is to first give the links a general style using topnav and roundlink ,
