@@ -62,23 +62,60 @@ nav li a {
   top: 0;
   right: 0; /*done so the sidebar wouldn't interfer with the rest of the code sort of offscreen */
   height: 100vh;
-  width: 250px;
+  width: 260px;
   z-index: 999; /* so the sidebar would be about everything*/
-  background-color: rgba(255, 255, 255, 0.322);
-  backdrop-filter: blur(10px); /*glass effect*/
-  box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px); /*glass effect*/
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
   display: none;
   flex-direction: column;
-  align-items: flex-start; /* the flex-starts was to uncenter the links*/
+  align-items: flex-start;
   justify-content: flex-start;
+  padding: 20px 0;
 }
 
 .sidebar li {
   width: 100%; /*for sidebar links to cover the full width of the sidebar*/
+  list-style: none;
+}
+
+/* close button */
+.sidebar li:first-child {
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  margin-bottom: 10px;
+  /* pointer-events: none; */
+}
+
+.sidebar li:first-child a {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 20px;
+  width: 100%;
 }
 
 .sidebar a {
+  display: block;
   width: 100%;
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #222;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.sidebar a:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: orange;
+}
+
+/* logout stands out */
+.sidebar li:last-child a {
+  color: orange;
+  font-weight: 600;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  margin-top: 10px;
 }
 
 .menu-button {
