@@ -16,6 +16,17 @@ body {
   background-color: rgba(231, 231, 231, 0.185);
 }
 
+#main-h2{
+    display: block;
+    font-size: 2em;
+    margin-block-start: 0.67rem;
+    margin-block-end: 0.67rem;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+
 .h-p {
   max-width: 600px;
   width: 90vw;
@@ -24,17 +35,6 @@ body {
   /* font-size: clamp(1rem, 2.5vw, 1.25rem); */
   line-height: 1.6;
 }
-/* 
-         h1{
-          font-size: clamp(1.8rem, 5vw, 2.5rem);
-         } */
-
-/*            
-           .h-p{
-            width: 50%;
-            margin: auto;
-            text-align: left;
-           } */
 
 nav ul {
   width: 100%;
@@ -56,9 +56,6 @@ nav li a {
   color: black;
 }
 
-/* nav a:hover{
-            background-color: #f0f0f0;
-           } */
 
 .sidebar {
   position: fixed;
@@ -192,9 +189,6 @@ a.color4:hover {
   display: block;
 }
 
-/* .topnav .icon{
-            display: none;
-          } */
 
 span.color {
   color: rgba(255, 68, 0, 0.688);
@@ -269,6 +263,10 @@ span.color {
   justify-content: center;
   gap: 0;
   padding: 0 20px;
+}
+
+#row2{
+  margin-top: 2.5rem;
 }
 
 .row:has(.img-column) {
