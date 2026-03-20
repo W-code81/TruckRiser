@@ -123,4 +123,25 @@
     padding: 1.2rem 0.5rem;
     margin: 0 1rem;
   }
+
+  .page-signup input{
+    width: 85%;
+    margin: 0 auto;
+  }
+
+  .page-signup #show-password{
+    position: absolute;
+    right: 35px;
+    top: 38%;
+    transform: translateY(-50%);
+  }
+
+  .page-signup label{
+    margin-left: 1.7rem;
+    font-size: small;
+  }
+
+  .page-signup .signup-link{
+    margin-right: 1.7rem;
+  }
 }

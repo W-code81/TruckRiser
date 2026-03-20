@@ -135,4 +135,22 @@
     padding: 1.2rem 0.5rem;
      margin: 0 1rem;
   }
+  
+  .page-login input{
+    width: 85%;
+    margin: 0 auto;
+  }
+
+  .page-login #show-password{
+    position: absolute;
+    right: 35px;
+    top: 38%;
+    transform: translateY(-50%);
+  }
+
+  .page-login label{
+    margin-left: 1.7rem;
+    font-size: small;
+  }
+
 }
