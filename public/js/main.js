@@ -1,4 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Alert auto-dismiss
+  const alerts = ["errorAlert", "successAlert"];
+  alerts.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      setTimeout(() => {
+        el.style.transition = "opacity 0.5s ease";
+        el.style.opacity = "0";
+        setTimeout(() => el.remove(), 300);
+      }, 3000);
+    }
+  });
 
   // Cookie banner
   (function () {
