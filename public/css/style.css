@@ -1063,6 +1063,19 @@ i:hover {
   opacity: 1;
 }
 
+#counter {
+  display: flex;
+  justify-content: space-around;
+  padding: 25px;
+  margin: 1.9rem;
+  text-align: center;
+}
+
+#counter h2 {
+  font-size: 2rem;
+  color: rgba(255, 68, 0, 0.688);
+}
+
 @keyframes slideUp {
   from {
     opacity: 0;
