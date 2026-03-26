@@ -109,7 +109,7 @@ app.use((req, res, next) => {
 
 // MONGODB INITIALIZATION AND SCHEMA
 mongoose
-  .connect(process.env.MONGO_ATLAS_URI)
+  .connect(process.env.MONGO_LOCAL_URI)
   .then(() => console.log("Connected to MongoDB Atlas"))
   .catch((err) => console.error("Error connecting to MongoDB:", err));
 
