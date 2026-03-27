@@ -1,3 +1,52 @@
+<div id="cookie-modal" style="display:none;" class="cookie-modal-overlay">
+  <div class="cookie-modal">
+
+    <div class="cookie-modal-header">
+      <h2>Cookie settings</h2>
+      <button id="close-cookie-modal">✕</button>
+    </div>
+
+    <div class="cookie-modal-desc">
+      <p>We use cookies to ensure the site works correctly and to remember your preferences. Choose which categories you accept below.</p>
+    </div>
+
+    <div class="cookie-modal-row">
+      <div class="cookie-modal-text">
+        <p class="cookie-modal-title">Necessary cookies</p>
+        <p class="cookie-modal-sub">Required for login, sessions, and security (CSRF). Cannot be disabled.</p>
+      </div>
+      <div class="cookie-modal-toggle-wrap">
+        <span class="cookie-toggle-label">Always on</span>
+        <div class="cookie-toggle disabled">
+          <div class="cookie-toggle-thumb"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cookie-modal-row">
+      <div class="cookie-modal-text">
+        <p class="cookie-modal-title">Optional cookies</p>
+        <p class="cookie-modal-sub">Future analytics and performance tracking to help us improve the site.</p>
+      </div>
+      <div class="cookie-modal-toggle-wrap">
+        <span class="cookie-toggle-label" id="optional-label">Off</span>
+        <div class="cookie-toggle" id="optional-toggle">
+          <div class="cookie-toggle-thumb"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cookie-modal-footer">
+      <button id="accept-necessary-btn">Accept necessary</button>
+      <div class="cookie-modal-footer-right">
+        <button id="save-settings-btn">Save settings</button>
+        <button id="accept-all-btn">Accept all</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <% if (!cookieConsent && showCookieBanner) { %>
 <div id="cookie-banner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie banner">
   <div class="cookie-inner">
