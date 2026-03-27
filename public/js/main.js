@@ -35,15 +35,85 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
-    if (manageCookiesBtn) {
-      manageCookiesBtn.addEventListener("click", () => window.location.href = "/privacy");
-    }
+    // if (manageCookiesBtn) {
+    //   manageCookiesBtn.addEventListener("click", () => window.location.href = "/privacy");
+    // }
 
     document.getElementById("close-cookies-btn")?.addEventListener("click", () => {
       cookieBanner.classList.add("cookie-hide");
       setTimeout(() => cookieBanner.remove(), 300);
     });
   })();
+
+  
+// Cookie modal
+const cookieModal = document.getElementById("cookie-modal");
+const optionalToggle = document.getElementById("optional-toggle");
+const optionalLabel = document.getElementById("optional-label");
+const cookieBanner = document.getElementById("cookie-banner");
+let optionalOn = false;
+
+// Open modal when Manage is clicked
+document.getElementById("manage-cookies-btn")?.addEventListener("click", () => {
+  cookieModal.style.display = "flex";
+  // cookieBanner.style.display ="none";
+  hideCookieBanner()
+  
+});
+
+// Close modal
+document.getElementById("close-cookie-modal")?.addEventListener("click", () => {
+  cookieModal.style.display = "none";
+});
+
+// Close on overlay click
+cookieModal?.addEventListener("click", (e) => {
+  if (e.target === cookieModal) cookieModal.style.display = "none";
+});
+
+// Optional toggle
+optionalToggle?.addEventListener("click", () => {
+  optionalOn = !optionalOn;
+  optionalToggle.classList.toggle("active", optionalOn);
+  optionalLabel.textContent = optionalOn ? "On" : "Off";
+});
+
+// Accept necessary only
+document.getElementById("accept-necessary-btn")?.addEventListener("click", () => {
+  saveCookiePreferences("necessary");
+  cookieModal.style.display = "none";
+});
+
+// Accept all
+document.getElementById("accept-all-btn")?.addEventListener("click", () => {
+  saveCookiePreferences("all");
+  cookieModal.style.display = "none";
+});
+
+// Save settings
+document.getElementById("save-settings-btn")?.addEventListener("click", () => {
+  saveCookiePreferences(optionalOn ? "all" : "necessary");
+  cookieModal.style.display = "none";
+});
+
+function saveCookiePreferences(level) {
+  fetch("/accept-cookies", {
+    method: "POST",
+    credentials: "same-origin",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ level }),
+  }).catch(() => {
+    document.cookie = `cookieConsent=${level}; max-age=86400; path=/`;
+  });
+}
+
+function hideCookieBanner() {
+  const banner = document.getElementById("cookie-banner");
+  if (banner) {
+    banner.classList.add("cookie-hide");
+    setTimeout(() => banner.style.display = "none", 20);
+  }
+}
 
   // Scroll to top button
   const scrollBtn = document.createElement("button");
