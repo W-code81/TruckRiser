@@ -14,6 +14,7 @@ const helmet = require("helmet");
 const nodemailer = require("nodemailer");
 const transporter = require("./lib/mailer");
 const _ = require("lodash");
+const csrf = require("@dr.pogodin/csurf") 
 const mongoose = require("mongoose");
 
 // MIDDLEWARES AND INITIALIZATIONS
@@ -89,6 +90,14 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session()); //persists sessions
 
+const csrfProtection = csrf({
+  cookie: {
+    httpOnly: true, // CSRF cookie can't be accessed via JavaScript
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict'
+  },
+});
+
 // FLASH
 app.use(flash());
 app.use((req, res, next) => {
@@ -148,9 +157,9 @@ app.get("/", (req, res) => {
 
 app
 .route("/home")
-.get( ensureAuthenticated, (req, res) => {
+.get( ensureAuthenticated, csrfProtection, (req, res) => {
   try {
-    res.render("index");
+    res.render("index",{ csrfToken: req.csrfToken() });
   } catch (err) {
     console.error("Error in /home route:", err);
     res.redirect("/");
@@ -158,19 +167,19 @@ app
 })
 
 // nodemailer contact route
-.post(async (req, res) => {
+.post(csrfProtection, async (req, res) => {
   const { firstName, lastName, email, message } = req.body;
   const trimmedEmail = _.trim(email);
   const trimmedMessage = _.trim(message);
 
   if (!firstName || !lastName || !email || !message) {
     res.locals.error = ["All fields are required"]; //sending message as locals removes flash redirect concern , renders directly to the page  
-    return res.render("index");
+    return res.render("index", { csrfToken: req.csrfToken() });
   }
 
   if (!validator.isEmail(trimmedEmail)) {
     res.locals.error = ["Invalid email address"];
-    return res.render("index");
+    return res.render("index", { csrfToken: req.csrfToken() });
   }
 
   try {
@@ -187,20 +196,21 @@ app
       `,
     });
     res.locals.success = ["Message sent successfully"];
-    res.render("index");
+    res.render("index", { csrfToken: req.csrfToken() });
   } catch (err) {
     console.error("Error sending contact email:", err);
     res.locals.error = ["Message failed to send. Please try again later."];
-    res.render("index");
+    res.render("index", { csrfToken: req.csrfToken() });
   }
 })
 
 app
   .route("/login")
-  .get((req, res) => {
-    res.render("login", { currentPage: "login" });
+  .get(csrfProtection, (req, res) => {
+    res.render("login", { currentPage: "login" , csrfToken: req.csrfToken() });
   })
   .post(
+    csrfProtection,
     passport.authenticate("local", {
       failureFlash: true,
       failureRedirect: "/login",
@@ -213,11 +223,11 @@ app
 // what if the a user tries to login with an email that is not registered? the failureFlash should handle that and show an error message, but we can also add a check before authentication to provide a more specific error message if the email is not found in the database. This would involve querying the User model to see if the email exists before calling passport.authenticate. If the email doesn't exist, we can flash a specific error message like "Email not registered" and redirect back to the login page without attempting authentication. This would enhance the user experience by providing clearer feedback on why the login failed.
 app
   .route("/signup")
-  .get((req, res) => {
-    res.render("signup", { currentPage: "signup" });
+  .get(csrfProtection, (req, res) => {
+    res.render("signup", { currentPage: "signup" , csrfToken: req.csrfToken() });
   })
 
-  .post(async (req, res) => {
+  .post(csrfProtection, async (req, res) => {
     try {
       const { email, password } = req.body;
 
@@ -290,6 +300,14 @@ app.get("/pricing", (req, res) => {
 
 app.get("/rent", (req, res) => {
   res.status(200).send("coming soon");
+});
+
+app.use((err, req, res, next) => {
+  if (err.code === "EBADCSRFTOKEN") {
+    req.flash("error", "Invalid or expired form token. Please try again.");
+    return res.redirect("/login");
+  }
+  next(err);
 });
 
 app.listen(port, () => {
