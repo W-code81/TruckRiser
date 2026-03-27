@@ -4,6 +4,7 @@
     <div class="form-container">
       <form action="/signup" method="post" autocomplete="on" id="signupForm">
         <h1>Get Started🚘</h1>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <label for="email">Email:</label>
         <input type="email" id="email" placeholder="Email" name="email" />
         <label for="password">Password:</label>
