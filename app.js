@@ -118,7 +118,7 @@ app.use((req, res, next) => {
 
 // MONGODB INITIALIZATION AND SCHEMA
 mongoose
-  .connect(process.env.MONGO_LOCAL_URI)
+  .connect(process.env.MONGO_ATLAS_URI)
   .then(() => console.log("Connected to MongoDB Atlas"))
   .catch((err) => console.error("Error connecting to MongoDB:", err));
 
@@ -291,6 +291,10 @@ app.post("/accept-cookies", (req, res) => {
   });
 
   res.sendStatus(200);
+});
+
+app.get("/privacy", (req, res) => {
+  res.render("privacy", { currentPage: "privacy" });
 });
 
 app.get("/pricing", (req, res) => {
