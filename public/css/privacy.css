@@ -1,0 +1,92 @@
+.privacy-page {
+  min-height: 100vh;
+  padding: 60px 20px;
+  background-color: #f9f9f9;
+}
+
+.privacy-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.privacy-hero {
+  margin-bottom: 40px;
+  border-bottom: 2px solid #ff7700;
+  padding-bottom: 20px;
+}
+
+.privacy-hero h1 {
+    text-align: center;
+  font-size: 2rem;
+  margin-bottom: 6px;
+}
+
+.privacy-hero p {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.privacy-section {
+  margin-bottom: 40px;
+}
+
+.privacy-section h2 {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  color: #222;
+}
+
+.privacy-section p,
+.privacy-section li {
+  color: #555;
+  line-height: 1.8;
+}
+
+.privacy-section ul {
+  padding-left: 20px;
+}
+
+.privacy-section a {
+  color: #ff7700;
+  text-decoration: none;
+}
+
+.cookie-table {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 16px 0;
+}
+
+.cookie-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e0e0e0;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.cookie-row:last-child {
+  border-bottom: none;
+}
+
+.cookie-header {
+  background-color: #f0f0f0;
+  font-weight: 600;
+  color: #333;
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge.necessary {
+  background-color: #e6f4ea;
+  color: #2d6a4f;
+}
