@@ -704,7 +704,7 @@ i:hover {
 }
 
 .cookie-text a {
-  color: #2563eb;
+  color: #ff7700;
   text-decoration: underline;
 }
 
@@ -905,6 +905,7 @@ i:hover {
   font-size: 14px;
   color: #666;
   line-height: 1.6;
+  text-align: left;
 }
 
 .cookie-modal-row {
@@ -924,6 +925,7 @@ i:hover {
   margin: 0 0 4px;
   font-size: 14px;
   font-weight: 500;
+  text-align: left;
 }
 
 .cookie-modal-sub {
@@ -931,6 +933,7 @@ i:hover {
   font-size: 13px;
   color: #666;
   line-height: 1.5;
+  text-align: left;
 }
 
 .cookie-modal-toggle-wrap {
