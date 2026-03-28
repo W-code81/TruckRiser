@@ -133,11 +133,23 @@ function hideCookieBanner() {
 
   // Sidebar
   const openMenu = document.getElementById("openMenu");
-  const closeMenu = document.getElementById("closeMenu");
-  const sidebar = document.querySelector(".sidebar");
+  const closeMenu = document.querySelectorAll(".closeMenu"); //select all close buttons, including links
+  const sidebar = document.querySelector("#sidebar");
 
   openMenu?.addEventListener("click", () => sidebar.style.display = "flex");
-  closeMenu?.addEventListener("click", () => sidebar.style.display = "none");
+  closeMenu?.forEach((btn) => {
+    btn.addEventListener("click", () => sidebar.style.display = "none");
+  });
+
+  // Close sidebar when clicking outside
+  document.addEventListener("click", (e) => {
+  if (
+    sidebar.style.display === "flex" && // Only check if sidebar is open
+    !sidebar.contains(e.target) && // Checks if the clicked element is outside the sidebar
+    !e.target.closest("#openMenu") // Checks if the clicked element or any of its ancestors has the "openMenu" class
+  ) {
+    sidebar.style.display = "none";
+  }});
 
   // Contact form
   const homeForm = document.getElementById("homeForm");
