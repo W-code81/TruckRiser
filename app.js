@@ -297,6 +297,10 @@ app.get("/privacy", (req, res) => {
   res.render("privacy", { currentPage: "privacy" });
 });
 
+app.get("/terms", (req, res) =>{
+  res.status(200).render("terms", {currentPage: "privacy"}); //currentPage uses same style as privacy 
+})
+
 app.get("/pricing", (req, res) => {
   res.status(200).send("coming soon");
   // res.render("pricing", { currentPage: "pricing" });
