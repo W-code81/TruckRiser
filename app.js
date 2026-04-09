@@ -14,7 +14,8 @@ const helmet = require("helmet");
 const nodemailer = require("nodemailer");
 const transporter = require("./lib/mailer");
 const _ = require("lodash");
-const csrf = require("@dr.pogodin/csurf") 
+const csrf = require("@dr.pogodin/csurf");
+const crypto = require("crypto");
 const mongoose = require("mongoose");
 
 // MIDDLEWARES AND INITIALIZATIONS
@@ -118,7 +119,7 @@ app.use((req, res, next) => {
 
 // MONGODB INITIALIZATION AND SCHEMA
 mongoose
-  .connect(process.env.MONGO_ATLAS_URI)
+  .connect(process.env.MONGO_LOCAL_URI)
   .then(() => console.log("Connected to MongoDB Atlas"))
   .catch((err) => console.error("Error connecting to MongoDB:", err));
 
