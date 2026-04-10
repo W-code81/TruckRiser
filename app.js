@@ -8,13 +8,10 @@ const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
-const crypto = require("crypto");
 const connectDB = require("./config/db");
 const passport = require("passport");
 const initPassport = require("./config/passport.config");
 const {
-  csrfProtection,
-  ensureAuthenticated,
   setCookieConsent,
   setFlashMessages,
   setShowCookieBanner,
