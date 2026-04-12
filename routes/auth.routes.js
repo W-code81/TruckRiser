@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require("passport");
 const User = require("../models/User");
 const { csrfProtection } = require("../middleware/middleware");
+const crypto = require("crypto");
 
 
 //LOGIN ROUTES
@@ -86,8 +87,53 @@ router
 });
 
 // FORGOT PASSWORD ROUTE
-router.get("/forgot-password", (req, res) => {
-  res.send("Forgot password page - under construction");
+router
+.route("/forgot-password")
+.get( (req, res) => {
+  // res.send("Forgot password page - under construction");
+  res.render("forgot-password")
+})
+
+.post( async (req, res) => {
+  try {
+    const { email } = req.body; //user claims their identity
+
+    const user = await User.findOne({ email }); //check if the user exists
+
+    
+    if (!user) {
+      req.flash("success", "If an account exists, a reset link was sent."); //never respond if an account exist to prevent ennumeration attack
+      return res.redirect("/login");
+    }
+
+   
+    const rawToken = crypto.randomBytes(32).toString("hex"); // generate secure random token
+
+    
+    const hashedToken = crypto // hash token
+      .createHash("sha256")
+      .update(rawToken)
+      .digest("hex");
+
+    // store in DB
+    user.resetPasswordToken = hashedToken;
+    user.resetPasswordExpires = Date.now() + 1000 * 60 * 15; // 15 mins
+
+    await user.save();
+
+    // send link (logging for now ) later nodemailer
+    const resetLink = `http://localhost:3000/reset-password/${rawToken}`;
+    console.log("RESET LINK:", resetLink);
+
+    req.flash("success", "Reset link sent (check console for now)");
+    res.redirect("/login");
+
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Something went wrong");
+    res.redirect("/forgot-password");
+  }
 });
+
 
 module.exports = router;
