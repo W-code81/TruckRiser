@@ -89,12 +89,12 @@ router
 // FORGOT PASSWORD ROUTE
 router
 .route("/forgot-password")
-.get( (req, res) => {
+.get(csrfProtection, (req, res) => {
   // res.send("Forgot password page - under construction");
-  res.render("forgot-password")
+  res.render("forgot-password", { currentPage: "forgot-password", csrfToken: req.csrfToken() });
 })
 
-.post( async (req, res) => {
+.post(csrfProtection, async (req, res) => {
   try {
     const { email } = req.body; //user claims their identity
 
