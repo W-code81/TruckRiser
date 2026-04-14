@@ -1,4 +1,8 @@
 /* Signup Page Styles - Scoped to avoid conflicts */
+*{
+  box-sizing: border-box;
+  /* outline: 1px solid red; */
+}
 .page-signup {
   background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
   min-height: 100vh;
@@ -117,6 +121,17 @@
   display: inline-block;
 }
 
+.form-sub{
+  padding: 10px ;
+  border: 1px solid #8888883f;
+  border-radius: 12px;
+  margin: 1.2rem 0;
+  text-align: left;
+  opacity: 0.65;
+  line-height: 1.5;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.09);
+  cursor: default;
+}
 
 @media (max-width: 500px) {
   .page-signup .form-container {
@@ -135,8 +150,10 @@
     top: 38%;
     transform: translateY(-50%);
   }
-
-  .page-signup label{
+  .form-sub{
+    margin-right: 1.7rem;
+  }
+  .page-signup label,.form-sub{
     margin-left: 1.7rem;
     font-size: small;
   }
