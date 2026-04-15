@@ -124,7 +124,7 @@ router
 
       // send link (logging for now ) later nodemailer
       const resetLink = `${process.env.LOCAL_URL}/reset-password/${rawToken}`;
-      
+
 
       //nodemailer reset link message 
       await transporter.sendMail({
@@ -143,7 +143,7 @@ router
         </div>`
       })
 
-      req.flash("success", "Reset link sent (check console for now)");
+      req.flash("success", "Reset link sent if an account exists");
       res.redirect("/login");
 
     } catch (err) {
