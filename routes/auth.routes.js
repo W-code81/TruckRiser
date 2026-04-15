@@ -4,6 +4,7 @@ const passport = require("passport");
 const User = require("../models/User");
 const { csrfProtection } = require("../middleware/middleware");
 const crypto = require("crypto");
+const transporter = require("../lib/mailer")
 
 
 //LOGIN ROUTES
@@ -122,7 +123,7 @@ router
     await user.save();
 
     // send link (logging for now ) later nodemailer
-    const resetLink = `http://localhost:3000/reset-password/${rawToken}`;
+    const resetLink = `${process.env.LOCAL_URL}/reset-password/${rawToken}`;
     console.log("RESET LINK:", resetLink);
 
     req.flash("success", "Reset link sent (check console for now)");
@@ -135,5 +136,81 @@ router
   }
 });
 
+//RESET PASSWORD GET PAGE
+router.get("/reset-password/:token", csrfProtection, async (req, res) => {
+  try {
+    //hash the token from the URL to compare with DB
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(req.params.token)
+      .digest("hex");
+
+    //looks up the user with the hashed token and checks if it's not expired (greater than now)
+    const user = await User.findOne({
+      resetPasswordToken: hashedToken,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      req.flash("error", "Invalid or expired token");
+      return res.redirect("/forgot-password");
+    }
+
+    //render reset password form with token in the URL (hidden field)
+    res.render("reset-password", { token: req.params.token, csrfToken: req.csrfToken() }); // pass raw token to the form
+
+  } catch (err) {
+    console.error(err);
+    res.redirect("/login");
+  }
+});
+
+//RESET PASSWORD ROUTE
+router.post("/reset-password/:token", csrfProtection, async (req, res) => {
+  try {
+    //get new password from form
+    const { password } = req.body;
+
+    //validate password (at least 8 chars)
+    if (!password || password.length < 8) {
+      req.flash("error", "Password must be at least 8 characters");
+      return res.redirect(`/reset-password/${req.params.token}`); // redirect back to the form with the same token
+    }
+
+    //hash the token from the URL to compare with DB
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(req.params.token)
+      .digest("hex");
+
+    //looks up the user with the hashed token and checks if it's not expired (greater than now)
+    const user = await User.findOne({
+      resetPasswordToken: hashedToken,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      req.flash("error", "Token expired or invalid");
+      return res.redirect("/forgot-password");
+    }
+
+    // set new password using passport-local-mongoose method which will hash it and save the user
+    await user.setPassword(password); // this will hash the password and save the user
+
+    // remove token (one-time use)
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+
+    await user.save();
+
+    req.flash("success", "Password reset successful. Please login.");
+    res.redirect("/login");
+
+  } catch (err) {
+    console.error(err);
+    req.flash("error", "Reset failed");
+    res.redirect("/forgot-password");
+  }
+});
 
 module.exports = router;

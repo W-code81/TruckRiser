@@ -14,6 +14,8 @@ const userSchema = new mongoose.Schema(
         validator: validator.isEmail,
         message: "Please provide a valid email address",
       },
+      resetPasswordToken: String,
+      resetPasswordExpires: Date,
     },
   },
   {
