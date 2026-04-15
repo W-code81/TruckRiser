@@ -157,7 +157,7 @@ router.get("/reset-password/:token", csrfProtection, async (req, res) => {
     }
 
     //render reset password form with token in the URL (hidden field)
-    res.render("reset-password", { token: req.params.token, csrfToken: req.csrfToken() }); // pass raw token to the form
+    res.render("reset-password", { currentPage: "reset-password", token: req.params.token, csrfToken: req.csrfToken() }); // pass raw token to the form
 
   } catch (err) {
     console.error(err);
