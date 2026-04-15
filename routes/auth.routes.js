@@ -11,7 +11,7 @@ const transporter = require("../lib/mailer")
 router
   .route("/login")
   .get(csrfProtection, (req, res) => {
-    res.render("login", { currentPage: "login" , csrfToken: req.csrfToken() });
+    res.render("login", { currentPage: "login", csrfToken: req.csrfToken() });
   })
   .post(
     csrfProtection,
@@ -31,7 +31,7 @@ router
 router
   .route("/signup")
   .get(csrfProtection, (req, res) => {
-    res.render("signup", { currentPage: "signup" , csrfToken: req.csrfToken() });
+    res.render("signup", { currentPage: "signup", csrfToken: req.csrfToken() });
   })
 
   .post(csrfProtection, async (req, res) => {
@@ -75,7 +75,7 @@ router
 
 
 // LOGOUT ROUTE
-  router.get("/logout", (req, res) => {
+router.get("/logout", (req, res) => {
   req.logout((err) => {
     if (err) {
       console.error("Logout error:", err);
@@ -89,52 +89,69 @@ router
 
 // FORGOT PASSWORD ROUTE
 router
-.route("/forgot-password")
-.get(csrfProtection, (req, res) => {
-  // res.send("Forgot password page - under construction");
-  res.render("forgot-password", { currentPage: "forgot-password", csrfToken: req.csrfToken() });
-})
+  .route("/forgot-password")
+  .get(csrfProtection, (req, res) => {
+    // res.send("Forgot password page - under construction");
+    res.render("forgot-password", { currentPage: "forgot-password", csrfToken: req.csrfToken() });
+  })
 
-.post(csrfProtection, async (req, res) => {
-  try {
-    const { email } = req.body; //user claims their identity
+  .post(csrfProtection, async (req, res) => {
+    try {
+      const { email } = req.body; //user claims their identity
 
-    const user = await User.findOne({ email }); //check if the user exists
+      const user = await User.findOne({ email }); //check if the user exists
 
-    
-    if (!user) {
-      req.flash("success", "If an account exists, a reset link was sent."); //never respond if an account exist to prevent ennumeration attack
-      return res.redirect("/login");
+
+      if (!user) {
+        req.flash("success", "If an account exists, a reset link was sent."); //never respond if an account exist to prevent ennumeration attack
+        return res.redirect("/login");
+      }
+
+
+      const rawToken = crypto.randomBytes(32).toString("hex"); // generate secure random token
+
+
+      const hashedToken = crypto // hash token
+        .createHash("sha256")
+        .update(rawToken)
+        .digest("hex");
+
+      // store in DB
+      user.resetPasswordToken = hashedToken;
+      user.resetPasswordExpires = Date.now() + 1000 * 60 * 15; // 15 mins
+
+      await user.save();
+
+      // send link (logging for now ) later nodemailer
+      const resetLink = `${process.env.LOCAL_URL}/reset-password/${rawToken}`;
+      
+
+      //nodemailer reset link message 
+      await transporter.sendMail({
+        from: `Truckriser Team <${process.env.EMAIL_USER}>`,
+        to: `${email}`,
+        subject: `Reset Password Link from Truckriser`,
+        html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2>Password Reset Request</h2>
+        <p>Hi ${email},</p>
+        <p>We received a request to reset your TruckRiser password. Click the link below to set a new password:</p>
+        <a href="${resetLink}" style="display: inline-block; padding: 10px 20px; background-color: #ff7700; color: white; text-decoration: none; border-radius: 5px;">Reset Password</a>
+        <p>This link expires in <strong>15 minutes</strong>.</p>
+        <p>If you didn't request this, you can safely ignore this email.</p>
+        <p>— The TruckRiser Team</p>
+        </div>`
+      })
+
+      req.flash("success", "Reset link sent (check console for now)");
+      res.redirect("/login");
+
+    } catch (err) {
+      console.error(err);
+      req.flash("error", "Something went wrong");
+      res.redirect("/forgot-password");
     }
-
-   
-    const rawToken = crypto.randomBytes(32).toString("hex"); // generate secure random token
-
-    
-    const hashedToken = crypto // hash token
-      .createHash("sha256")
-      .update(rawToken)
-      .digest("hex");
-
-    // store in DB
-    user.resetPasswordToken = hashedToken;
-    user.resetPasswordExpires = Date.now() + 1000 * 60 * 15; // 15 mins
-
-    await user.save();
-
-    // send link (logging for now ) later nodemailer
-    const resetLink = `${process.env.LOCAL_URL}/reset-password/${rawToken}`;
-    console.log("RESET LINK:", resetLink);
-
-    req.flash("success", "Reset link sent (check console for now)");
-    res.redirect("/login");
-
-  } catch (err) {
-    console.error(err);
-    req.flash("error", "Something went wrong");
-    res.redirect("/forgot-password");
-  }
-});
+  });
 
 //RESET PASSWORD GET PAGE
 router.get("/reset-password/:token", csrfProtection, async (req, res) => {
