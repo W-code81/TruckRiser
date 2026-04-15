@@ -123,7 +123,7 @@ router
       await user.save();
 
       // send link (logging for now ) later nodemailer
-      const resetLink = `${process.env.LOCAL_URL}/reset-password/${rawToken}`;
+      const resetLink = `${process.env.PROD_URL}/reset-password/${rawToken}`;
 
 
       //nodemailer reset link message 
