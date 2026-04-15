@@ -4,13 +4,14 @@ const passport = require("passport");
 const User = require("../models/User");
 const { csrfProtection } = require("../middleware/middleware");
 const crypto = require("crypto");
+const transporter = require("../lib/mailer")
 
 
 //LOGIN ROUTES
 router
   .route("/login")
   .get(csrfProtection, (req, res) => {
-    res.render("login", { currentPage: "login" , csrfToken: req.csrfToken() });
+    res.render("login", { currentPage: "login", csrfToken: req.csrfToken() });
   })
   .post(
     csrfProtection,
@@ -30,7 +31,7 @@ router
 router
   .route("/signup")
   .get(csrfProtection, (req, res) => {
-    res.render("signup", { currentPage: "signup" , csrfToken: req.csrfToken() });
+    res.render("signup", { currentPage: "signup", csrfToken: req.csrfToken() });
   })
 
   .post(csrfProtection, async (req, res) => {
@@ -74,7 +75,7 @@ router
 
 
 // LOGOUT ROUTE
-  router.get("/logout", (req, res) => {
+router.get("/logout", (req, res) => {
   req.logout((err) => {
     if (err) {
       console.error("Logout error:", err);
@@ -88,52 +89,145 @@ router
 
 // FORGOT PASSWORD ROUTE
 router
-.route("/forgot-password")
-.get(csrfProtection, (req, res) => {
-  // res.send("Forgot password page - under construction");
-  res.render("forgot-password", { currentPage: "forgot-password", csrfToken: req.csrfToken() });
-})
+  .route("/forgot-password")
+  .get(csrfProtection, (req, res) => {
+    // res.send("Forgot password page - under construction");
+    res.render("forgot-password", { currentPage: "forgot-password", csrfToken: req.csrfToken() });
+  })
 
-.post(csrfProtection, async (req, res) => {
-  try {
-    const { email } = req.body; //user claims their identity
+  .post(csrfProtection, async (req, res) => {
+    try {
+      const { email } = req.body; //user claims their identity
 
-    const user = await User.findOne({ email }); //check if the user exists
+      const user = await User.findOne({ email }); //check if the user exists
 
-    
-    if (!user) {
-      req.flash("success", "If an account exists, a reset link was sent."); //never respond if an account exist to prevent ennumeration attack
-      return res.redirect("/login");
+
+      if (!user) {
+        req.flash("success", "If an account exists, a reset link was sent."); //never respond if an account exist to prevent ennumeration attack
+        return res.redirect("/login");
+      }
+
+
+      const rawToken = crypto.randomBytes(32).toString("hex"); // generate secure random token
+
+
+      const hashedToken = crypto // hash token
+        .createHash("sha256")
+        .update(rawToken)
+        .digest("hex");
+
+      // store in DB
+      user.resetPasswordToken = hashedToken;
+      user.resetPasswordExpires = Date.now() + 1000 * 60 * 15; // 15 mins
+
+      await user.save();
+
+      // send link (logging for now ) later nodemailer
+      const resetLink = `${process.env.LOCAL_URL}/reset-password/${rawToken}`;
+
+
+      //nodemailer reset link message 
+      await transporter.sendMail({
+        from: `Truckriser Team <${process.env.EMAIL_USER}>`,
+        to: `${email}`,
+        subject: `Reset Password Link from Truckriser`,
+        html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2>Password Reset Request</h2>
+        <p>Hi ${email},</p>
+        <p>We received a request to reset your TruckRiser password. Click the link below to set a new password:</p>
+        <a href="${resetLink}" style="display: inline-block; padding: 10px 20px; background-color: #ff7700; color: white; text-decoration: none; border-radius: 5px;">Reset Password</a>
+        <p>This link expires in <strong>15 minutes</strong>.</p>
+        <p>If you didn't request this, you can safely ignore this email.</p>
+        <p>— The TruckRiser Team</p>
+        </div>`
+      })
+
+      req.flash("success", "Reset link sent if an account exists");
+      res.redirect("/login");
+
+    } catch (err) {
+      console.error(err);
+      req.flash("error", "Something went wrong");
+      res.redirect("/forgot-password");
     }
+  });
 
-   
-    const rawToken = crypto.randomBytes(32).toString("hex"); // generate secure random token
-
-    
-    const hashedToken = crypto // hash token
+//RESET PASSWORD GET PAGE
+router.get("/reset-password/:token", csrfProtection, async (req, res) => {
+  try {
+    //hash the token from the URL to compare with DB
+    const hashedToken = crypto
       .createHash("sha256")
-      .update(rawToken)
+      .update(req.params.token)
       .digest("hex");
 
-    // store in DB
-    user.resetPasswordToken = hashedToken;
-    user.resetPasswordExpires = Date.now() + 1000 * 60 * 15; // 15 mins
+    //looks up the user with the hashed token and checks if it's not expired (greater than now)
+    const user = await User.findOne({
+      resetPasswordToken: hashedToken,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      req.flash("error", "Invalid or expired token");
+      return res.redirect("/forgot-password");
+    }
+
+    //render reset password form with token in the URL (hidden field)
+    res.render("reset-password", { currentPage: "reset-password", token: req.params.token, csrfToken: req.csrfToken() }); // pass raw token to the form
+
+  } catch (err) {
+    console.error(err);
+    res.redirect("/login");
+  }
+});
+
+//RESET PASSWORD ROUTE
+router.post("/reset-password/:token", csrfProtection, async (req, res) => {
+  try {
+    //get new password from form
+    const { password } = req.body;
+
+    //validate password (at least 8 chars)
+    if (!password || password.length < 8) {
+      req.flash("error", "Password must be at least 8 characters");
+      return res.redirect(`/reset-password/${req.params.token}`); // redirect back to the form with the same token
+    }
+
+    //hash the token from the URL to compare with DB
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(req.params.token)
+      .digest("hex");
+
+    //looks up the user with the hashed token and checks if it's not expired (greater than now)
+    const user = await User.findOne({
+      resetPasswordToken: hashedToken,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      req.flash("error", "Token expired or invalid");
+      return res.redirect("/forgot-password");
+    }
+
+    // set new password using passport-local-mongoose method which will hash it and save the user
+    await user.setPassword(password); // this will hash the password and save the user
+
+    // remove token (one-time use)
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
 
     await user.save();
 
-    // send link (logging for now ) later nodemailer
-    const resetLink = `http://localhost:3000/reset-password/${rawToken}`;
-    console.log("RESET LINK:", resetLink);
-
-    req.flash("success", "Reset link sent (check console for now)");
+    req.flash("success", "Password reset successful. Please login.");
     res.redirect("/login");
 
   } catch (err) {
     console.error(err);
-    req.flash("error", "Something went wrong");
+    req.flash("error", "Reset failed");
     res.redirect("/forgot-password");
   }
 });
-
 
 module.exports = router;

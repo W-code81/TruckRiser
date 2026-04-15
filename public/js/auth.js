@@ -28,7 +28,7 @@ if (icon) {
   });
 }
 
-// Password validation
+// Password validation for signup form
 const form = document.getElementById("signupForm");
 if (form) {
   form.addEventListener("submit", function (event) {
@@ -40,6 +40,43 @@ if (form) {
   });
 }
 
+// Reset password form validation
+const resetForm = document.getElementById("resetForm");
+if (resetForm) {
+  resetForm.addEventListener("submit", function (event) {
+  const password = document.getElementById("password").value.trim();
+  const confirmPassword = document.getElementById("confirmPassword").value.trim();
+
+  if(password.length < 8) {
+    event.preventDefault();
+    showValidationError("Password must be at least 8 characters long.");
+    return;
+  }
+
+  if (password !== confirmPassword){
+    event.preventDefault();
+    showValidationError("Passwords do not match.");
+    return;
+  }
+});
+}
+
+// Show/hide icon for confirm password field in reset password form
+const confirmIcon = document.getElementById("show-confirm-password");
+if (confirmIcon) {
+  confirmIcon.addEventListener("click", function () {
+    const confirmPasswordInput = document.getElementById("confirmPassword");
+    if (confirmPasswordInput.type === "password") {
+      confirmPasswordInput.type = "text";
+      confirmIcon.innerHTML = '<i class="fas fa-eye-slash"></i>';
+    } else {
+      confirmPasswordInput.type = "password";
+      confirmIcon.innerHTML = '<i class="fas fa-eye"></i>';
+    }
+  });
+}
+
+//function to show validation errors on the form (used for password validation on client side before submission)
 function showValidationError(message) {
   const existing = document.getElementById("validationError");
   if (existing) existing.remove();

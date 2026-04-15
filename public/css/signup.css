@@ -108,7 +108,7 @@
   margin: 0 0 1rem 0
 }
 
-.page-signup #show-password {
+.page-signup #show-password, .page-signup #show-confirm-password {
   position: absolute;
   right: 15px;
   top: 38%;
