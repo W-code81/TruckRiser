@@ -143,7 +143,7 @@ router
         </div>`
       })
 
-      req.flash("success", "Reset link sent if an account exists");
+      req.flash("success", "If an account exists, a reset link was sent.");
       res.redirect("/login");
 
     } catch (err) {
