@@ -75,7 +75,7 @@ router
 
 
 // LOGOUT ROUTE
-router.get("/logout", (req, res) => {
+router.get("/logout", csrfProtection, (req, res) => {
   req.logout((err) => {
     if (err) {
       console.error("Logout error:", err);
