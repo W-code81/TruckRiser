@@ -25,11 +25,11 @@ router.get("/terms", csrfProtection, (req, res) => {
 });
 
 router.get("/pricing", csrfProtection, (req, res) => {
-  res.status(200).send("coming soon");
+  res.status(200).render("under_construction_page", { currentPage: "pricing" });
 });
 
 router.get("/rent", csrfProtection, (req, res) => {
-  res.status(200).send("coming soon");
+  res.status(200).render("under_construction_page", { currentPage: "rent" });
 });
 
 router.get("/user/profile", csrfProtection, (req, res) => {
