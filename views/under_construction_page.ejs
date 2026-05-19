@@ -1,0 +1,50 @@
+
+<style>
+  * { box-sizing: border-box; padding: 0; margin: 0; }
+  .uc-wrap { min-height: 500px; background: #1a1a1a; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem 2rem; font-family: var(--font-sans); }
+  .uc-stripe { width: 100%; height: 12px; background: repeating-linear-gradient(90deg, #ff7700 0px, #ff7700 32px, #1a1a1a 32px, #1a1a1a 64px); margin-bottom: 3rem; }
+  .uc-badge { background: #ff7700; color: #fff; font-size: 11px; font-weight: 500; letter-spacing: 2px; padding: 4px 14px; border-radius: 4px; margin-bottom: 1.5rem; text-transform: uppercase; }
+  .uc-title { font-size: 42px; font-weight: 500; color: #fff; margin: 0 0 0.5rem; text-align: center; line-height: 1.2; }
+  .uc-title span { color: #ff7700; }
+  .uc-sub { font-size: 15px; color: #888; text-align: center; margin: 0 0 2.5rem; max-width: 400px; line-height: 1.7; }
+  .uc-truck { margin: 1.5rem 0 2rem; }
+  .uc-links { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .uc-btn-primary { background: #ff7700; color: #fff; border: none; padding: 10px 24px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; }
+  .uc-btn-secondary { background: transparent; color: #888; border: 1px solid #444; padding: 10px 24px; border-radius: 8px; font-size: 14px; cursor: pointer; text-decoration: none; }
+  .uc-btn-secondary:hover { border-color: #ff7700; color: #ff7700; }
+  .uc-stripe-bottom { width: 100%; height: 12px; background: repeating-linear-gradient(90deg, #ff7700 0px, #ff7700 32px, #1a1a1a 32px, #1a1a1a 64px); margin-top: 3rem; }
+</style>
+
+<div class="uc-wrap">
+  <div class="uc-stripe"></div>
+
+  <div class="uc-badge">Under Construction</div>
+
+  <div class="uc-truck">
+    <svg width="200" height="100" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="10" y="30" width="120" height="55" rx="4" fill="#ff7700"/>
+      <rect x="130" y="45" width="55" height="40" rx="4" fill="#cc5500"/>
+      <rect x="135" y="50" width="44" height="22" rx="2" fill="#1a1a1a" opacity="0.6"/>
+      <rect x="10" y="30" width="120" height="10" rx="2" fill="#cc5500"/>
+      <circle cx="45" cy="88" r="12" fill="#333" stroke="#ff7700" stroke-width="3"/>
+      <circle cx="45" cy="88" r="5" fill="#ff7700"/>
+      <circle cx="155" cy="88" r="12" fill="#333" stroke="#ff7700" stroke-width="3"/>
+      <circle cx="155" cy="88" r="5" fill="#ff7700"/>
+      <rect x="0" y="78" width="200" height="4" rx="2" fill="#444"/>
+      <rect x="8" y="58" width="18" height="12" rx="2" fill="#FFD700" opacity="0.9"/>
+      <rect x="55" y="35" width="6" height="4" rx="1" fill="#cc5500"/>
+      <rect x="65" y="35" width="6" height="4" rx="1" fill="#cc5500"/>
+      <rect x="75" y="35" width="6" height="4" rx="1" fill="#cc5500"/>
+    </svg>
+  </div>
+
+  <h1 class="uc-title">This page is being<br><span>built</span></h1>
+  <p class="uc-sub">Our team is working hard to get this ready. Check back soon — we're moving fast.</p>
+
+  <div class="uc-links">
+    <a href="/home" class="uc-btn-primary">Back to home</a>
+    <a href="/home#contact" class="uc-btn-secondary">Contact us</a>
+  </div>
+
+  <div class="uc-stripe-bottom"></div>
+</div>
