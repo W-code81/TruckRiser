@@ -18,7 +18,7 @@ const initializeTrans = async (req, res) => {
             email,
             amount,
             plan,
-            callback_url: `${process.env.LOCAL_URL}/paystack/payment/callback`,
+            callback_url: `${process.env.PROD_URL}/paystack/payment/callback`,
         });
 
         await User.findByIdAndUpdate(id, {
