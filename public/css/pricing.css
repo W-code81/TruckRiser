@@ -132,8 +132,26 @@
   width: 100%;
 }
 
+.pricing-btn:hover{
+  margin-top: auto;
+  background: transparent;
+  border: 1px solid #ff7700d3;
+  color: #ff7700da;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+}
+
 .pricing-btn.primary {
   background: #ff7700;
+  color: #fff;
+  border: none;
+}
+
+.pricing-btn.primary:hover{
+  background: #ff7700db;
   color: #fff;
   border: none;
 }
