@@ -1,109 +1,23 @@
 <%- include("./partials/header.ejs") %>
 
-<div class="page-pricing">
-  <section>
-      <h1 class="price">Pricing</h1>
+  <div class="pricing-page">
+    <div class="pricing-stripe"></div>
 
-      <div class="container">
-        <div class="cards">
-          <h6>Free plan</h6>
+    <div class="pricing-hero">
+      <span class="pricing-badge">Pricing</span>
+      <h1>Simple, <span class="pricing-accent">transparent</span> pricing</h1>
+      <p>Choose the plan that fits your rental needs. No hidden fees.</p>
+    </div>
 
-          <h1>Free</h1>
-          <hr class="hr-color" />
+    <div class="pricing-grid" id="pricing-grid">
+      <div class="pricing-loading">Loading plans...</div>
+    </div>
 
-          <p>
-            <i class="fa-solid fa-circle-check f-color"></i> Lorem ipsum dolor
-            sit amet adipisicing
-          </p>
-          <p>
-            <i class="fa-solid fa-circle-check f-color"></i>Lorem ipsum
-            consectetur
-          </p>
-          <p>
-            <i class="fa-solid fa-circle-check f-color"></i>Lorem ipsum dolor
-            sit amet
-          </p>
-          <p>
-            <i class="fa-solid fa-circle-check f-color"></i>Lorem ipsum dolor
-            sit amet elit.
-          </p>
-          <p>
-            <i class="fa-solid fa-circle-check f-color"></i>Lorem ipsum dolor
-            sit amet
-          </p>
+    <p class="pricing-note">All prices are in Nigerian Naira (NGN). Payments are processed securely via Paystack.</p>
+    <div class="pricing-stripe"></div>
+  </div>
 
-          <button class="btn" >Get Strated</button>
-        </div>
+  <div id="app" data-user='<%- JSON.stringify(currentUser || null) %>'></div>
 
-        <div class="cards">
-          <h6>Standard plan</h6>
-
-          <h1>$99.99/m</h1>
-
-          <hr class="hr-color" />
-
-          <p>
-            <i class="fa-solid fa-circle-check f-color"></i> Lorem ipsum dolor
-            sit amet adipisicing
-          </p>
-          <p>
-            <i class="fa-solid fa-circle-check f-color"></i>Lorem ipsum
-            consectetur
-          </p>
-          <p>
-            <i class="fa-solid fa-circle-check f-color"></i>Lorem ipsum dolor
-            sit amet
-          </p>
-          <p>
-            <i class="fa-solid fa-circle-check f-color"></i>Lorem ipsum dolor
-            sit amet elit.
-          </p>
-          <p>
-            <i class="fa-solid fa-circle-check f-color"></i>Lorem ipsum dolor
-            sit amet
-          </p>
-          <button class="btn-2" >Get Strated</button>
-        </div>
-
-        <div class="cards">
-          <h6>Avanced plan</h6>
-
-          <h1>$19.99/m</h1>
-          <hr class="hr-color" />
-
-          <p>
-            <i class="fa-solid fa-circle-check f-color"></i> Lorem ipsum dolor
-            sit amet adipisicing
-          </p>
-          <p>
-            <i class="fa-solid fa-circle-check f-color"></i>Lorem ipsum
-            consectetur
-          </p>
-          <p>
-            <i class="fa-solid fa-circle-check f-color"></i>Lorem ipsum dolor
-            sit amet
-          </p>
-          <p>
-            <i class="fa-solid fa-circle-check f-color"></i>Lorem ipsum dolor
-            sit amet elit.
-          </p>
-          <p>
-            <i class="fa-solid fa-circle-check f-color"></i>Lorem ipsum dolor
-            sit amet
-          </p>
-          <button class="btn">Get Strated</button>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="footer">
-        <p>2025 All Right's Reserved</p>
-      </div>
-    </section>
-
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="jQuery/jquery-3.7.1.min.js"></script>
-</div>
-
-<%- include("./partials/footer.ejs") %>
+  <script src="/js/pricing.js"></script>
+  <%- include("./partials/footer.ejs") %>
