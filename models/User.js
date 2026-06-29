@@ -15,6 +15,26 @@ const userSchema = new mongoose.Schema(
         message: "Please provide a valid email address",
       },
     },
+    fullname: {
+      type: String,
+      trim: true,
+    },
+    paystack_ref: {
+      type: String,
+    },
+    amountDonated: {
+      type: Number,
+    },
+    isSubscribed: {
+      type: Boolean,
+      default: false,
+    },
+    planName: {
+      type: String,
+    },
+    timeSubscribed: {
+      type: Date,
+    },
     resetPasswordToken: String,   // top level
     resetPasswordExpires: Date,   // top level
   },

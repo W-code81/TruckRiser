@@ -19,12 +19,15 @@ const {
 const authRoutes = require("./routes/auth.routes");
 const homeRoutes = require("./routes/home.routes");
 const generalRoutes = require("./routes/general.routes");
+const paystackRoutes = require("./routes/plan.routes");
+const cors = require("cors");
 
 
 // MIDDLEWARES AND INITIALIZATIONS
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
+app.use(cors());
 app.use(express.static("public"));
 
 
@@ -100,6 +103,7 @@ connectDB();
 app.use(generalRoutes);
 app.use(homeRoutes);
 app.use(authRoutes);
+app.use("/paystack", paystackRoutes);
 
 app.use((err, req, res, next) => {
   if (err.code === "EBADCSRFTOKEN") {

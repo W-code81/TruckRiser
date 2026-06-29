@@ -13,6 +13,7 @@
     "bcrypt": "^6.0.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
     "crypto": "^1.0.1",
     "csurf": "^1.11.0",
     "dotenv": "^17.2.3",
@@ -30,6 +31,7 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^9.0.1",
+    "paystack-api": "^2.0.6",
     "validator": "^13.15.26"
   }
 }
