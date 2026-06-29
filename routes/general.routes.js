@@ -24,8 +24,8 @@ router.get("/terms", csrfProtection, (req, res) => {
   res.render("terms", { currentPage: "privacy" });
 });
 
-router.get("/pricing", csrfProtection, (req, res) => {
-  res.status(200).render("under_construction_page", { currentPage: "pricing" });
+router.get("/pricing", ensureAuthenticated ,csrfProtection, (req, res) => {
+  res.status(200).render("pricing", { currentPage: "pricing", currentUser: req.user});
 });
 
 router.get("/rent", csrfProtection, (req, res) => {
