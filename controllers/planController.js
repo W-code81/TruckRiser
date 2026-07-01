@@ -52,6 +52,17 @@ const getPlans = async (req, res) => {
 
 const addWebhook = async (req, res) => {
   try {
+    // verify webhook signature
+    const hash = crypto
+      .createHmac("sha512", process.env.PAYSTACK_TEST_API_KEY) //API key can be changed
+      .update(JSON.stringify(req.body))
+      .digest("hex");
+
+    if (hash !== req.headers["x-paystack-signature"]) {
+      console.log("Invalid webhook signature — request rejected");
+      return res.status(401).json({ message: "Invalid webhook signature" });
+    }
+
     let data = req.body;
     console.log("Webhook data:", data);
 
