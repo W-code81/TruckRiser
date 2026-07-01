@@ -56,7 +56,7 @@ const addWebhook = async (req, res) => {
     // verify webhook signature
     const hash = crypto
       .createHmac("sha512", process.env.PAYSTACK_TEST_API_KEY) //API key can be changed
-      .update(JSON.stringify(req.body))
+      .update(req.body) //raw body of the request,necessary for signature verification
       .digest("hex");
 
     if (hash !== req.headers["x-paystack-signature"]) {
