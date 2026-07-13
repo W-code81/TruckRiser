@@ -40,8 +40,10 @@ const getPlans = async (req, res) => {
   try {
     const response = await paystack.plan.list();
 
+    const activePlans = response.data.filter(plan => !(plan.is_deleted || plan.is_archived));
+
     res.status(200).json({
-      data: response.data,
+      data: activePlans,
       message: response.message,
       status: response.status,
     });
