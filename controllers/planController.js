@@ -64,7 +64,8 @@ const addWebhook = async (req, res) => {
       return res.status(401).json({ message: "Invalid webhook signature" });
     }
 
-    let data = req.body;
+    // parse raw body after verification
+    const data = JSON.parse(req.body);
     console.log("Webhook data:", data);
 
     switch (data.event) {
